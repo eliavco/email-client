@@ -1,0 +1,16 @@
+@import './../../../scss/abstract/variables';
+
+.bk-navbar-links {
+	margin-right: auto;
+	margin-left: 0 !important;
+}
+
+.navbar-brand {
+	font-size: 1.8rem;
+}
+
+.navbar {
+	@media (max-width: map-get($grid-breakpoints, lg)) {
+		direction: ltr;
+	}
+}

@@ -1,0 +1,46 @@
+<div class="bg-main">
+	<div class="container">
+		<div class="row">
+			<div class="col-md">
+				<form>
+
+					<!-- Name -->
+					<div class="form-group">
+						<label for="babyNameInput">איך בא לך שיקראו לתינוק?</label>
+						<input type="text" (keyup.enter)="onSubmit()" class="form-control" placeholder="שם לבייבי" name="babyNameInput" id="babyNameInput" required [(ngModel)]="baby.name">
+						<small id="nameHelp" class="form-text text-muted">השמות חייבים לענות על ה<a target="_blank" routerLink="/rules">תקנון</a></small>
+					</div>
+
+
+					<!-- Author -->
+					<div class="form-group">
+						<label for="babyAuthorNameInput">השם שלך</label>
+						<input type="text" (keyup.enter)="onSubmit()" class="form-control" placeholder="שם מלא" name="babyAuthorNameInput" id="babyAuthorNameInput" required [(ngModel)]="baby.author">
+					</div>
+
+
+					<!-- Reason -->
+					<div class="form-group">
+						<label for="babyReasonNameInput">למה נראלך שזה אחלה של שם?</label>
+						<input type="text" (keyup.enter)="onSubmit()" class="form-control" placeholder="סיבה" name="babyReasonNameInput" id="babyReasonNameInput" required [(ngModel)]="baby.reason">
+					</div>
+
+
+					<!-- Group -->
+					<div class="form-group">
+						<label for="babyGroupInput">באיזה שנה עשית (או היית אמור לעשות) את כנס הקיץ?</label>
+						<select class="form-control" (keyup.enter)="onSubmit()" id="babyGroupInput" name="babyGroupInput" required [(ngModel)]="baby.group">
+							<option>2018</option>
+							<option>2019</option>
+							<option>2020</option>
+							<option value="other">אחר</option>
+						</select>
+					</div>
+
+
+					<button (click)="onSubmit()" class="btn btn-primary btn-big-private">שלח</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

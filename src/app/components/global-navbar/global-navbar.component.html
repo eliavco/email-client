@@ -1,0 +1,21 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+		aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" routerLink="/">
+		<img src="assets/logos/logo-transparent-blue-spaceship.png" height="30" class="d-inline-block align-top" alt="MichalsFirst Logo"
+			loading="lazy">
+		התינוק של מיכל
+	</a>
+
+	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 bk-navbar-links">
+			<ng-container *ngFor="let page of pages">
+				<li class="nav-item" [class.active]="page.active">
+					<a class="nav-link user-select-none" [routerLink]="page.link">{{ page.title }}</a>
+				</li>
+			</ng-container>
+		</ul>
+	</div>
+</nav>

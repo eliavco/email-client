@@ -1,0 +1,14 @@
+.toast {
+	font-size: 1.5rem;
+
+	&-header {
+		img {
+			height: 3rem;
+		}
+	}
+
+	$red-color: #dc3545;
+	&-red {
+		background-color: rgba($red-color, .2);
+	}
+}

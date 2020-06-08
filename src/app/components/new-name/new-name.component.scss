@@ -1,0 +1,26 @@
+@import './../../../scss/abstract/variables';
+
+.bg-main {
+	padding: 3rem;
+	font-size: 120%;
+
+	@media (max-width: map-get($grid-breakpoints, sm)) {
+		padding: 1.3rem;
+	}
+}
+
+.btn-big-private {
+	font-size: 1.7rem;
+}
+
+.form {
+	&-control {
+		font-size: 2.3rem;
+	}
+	&-group {
+		margin-top: 1.8rem;
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}
