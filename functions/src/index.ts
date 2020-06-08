@@ -10,11 +10,12 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const compression = require('compression');
+const multer = require('multer');
 
 const babyRouter = require('./routes/babyRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const setUpModels = require('./models/model');
+// const setUpModels = require('./models/model');
 
 //initialize firebase inorder to access its services
 const serviceAccount = require('./serviceAccount.json');
@@ -48,20 +49,23 @@ main.enable('trust proxy');
 main.use(cors());
 main.options('*', cors());
 
-const db = admin.firestore();
-const bucket = admin.storage().bucket();
+// const db = admin.firestore();
+// const bucket = admin.storage().bucket();
 
-const dbm = setUpModels();
+// const dbm = setUpModels();
 
+main.use(multer().none());
 // HELMET
 main.use(helmet());
 main.use((req: any, res, next) => {
 	console.log(req);
-	req.requestTime = new Date().toISOString();
-	req.db = db;
-	req.st = bucket;
-	req.dbm = dbm;
-	next();
+	console.log(req.body);
+	res.status(201).json({ status: 'OK' });
+	// req.requestTime = new Date().toISOString();
+	// req.db = db;
+	// req.st = bucket;
+	// req.dbm = dbm;
+	// next();
 });
 
 // Rate limit
