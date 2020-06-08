@@ -56,6 +56,7 @@ const dbm = setUpModels();
 // HELMET
 main.use(helmet());
 main.use((req: any, res, next) => {
+	console.log(req);
 	req.requestTime = new Date().toISOString();
 	req.db = db;
 	req.st = bucket;
