@@ -18,11 +18,14 @@ const globalErrorHandler = require('./controllers/errorController');
 // const setUpModels = require('./models/model');
 
 //initialize firebase inorder to access its services
-const serviceAccount = require('./serviceAccount.json');
-const adminConfig = JSON.parse(process.env.FIREBASE_CONFIG!);
-adminConfig.credential = admin.credential.cert(serviceAccount);
-// admin.initializeApp(functions.config().firebase);
-admin.initializeApp(adminConfig);
+if (process.env.FUNCTIONS_EMULATOR) {
+	const serviceAccount = require('./../serviceAccount.json');
+	const adminConfig = JSON.parse(process.env.FIREBASE_CONFIG!);
+	adminConfig.credential = admin.credential.cert(serviceAccount);
+	admin.initializeApp(adminConfig);
+} else {
+	admin.initializeApp(functions.config().firebase);
+}
 
 //initialize express server
 const app = express();

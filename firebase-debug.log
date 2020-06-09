@@ -1,0 +1,194 @@
+[debug] [2020-06-09T19:56:37.560Z] ----------------------------------------------------------------------
+[debug] [2020-06-09T19:56:37.564Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\eliav_1iz7\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-06-09T19:56:37.564Z] CLI Version:   8.4.2
+[debug] [2020-06-09T19:56:37.564Z] Platform:      win32
+[debug] [2020-06-09T19:56:37.564Z] Node Version:  v13.5.0
+[debug] [2020-06-09T19:56:37.678Z] Time:          Tue Jun 09 2020 22:56:37 GMT+0300 (Israel Daylight Time)
+[debug] [2020-06-09T19:56:37.678Z] ----------------------------------------------------------------------
+[debug] [2020-06-09T19:56:37.678Z] 
+[debug] [2020-06-09T19:56:37.753Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-09T19:56:37.753Z] > authorizing via signed-in user
+[debug] [2020-06-09T19:56:37.753Z] [iam] checking project email-cohen for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-06-09T19:56:37.756Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/email-cohen:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-06-09T19:56:40.074Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:56:39 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=568","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:56:40.075Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/email-cohen/serviceAccounts/email-cohen@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-06-09T19:56:43.347Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:56:42 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:56:43.348Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/email-cohen  
+ 
+[debug] [2020-06-09T19:56:48.067Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:56:46 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[info] 
+[info] === Deploying to 'email-cohen'...
+[info] 
+[info] i  deploying functions, hosting 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[debug] [2020-06-09T19:58:03.325Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "serveWatch": "concurrently \"tsc -w\" \"firebase emulators:start --only functions\""
+  },
+  "engines": {
+    "node": "8"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "color-name": "^1.1.4",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.1.3",
+    "fast-crc32c": "^2.0.0",
+    "firebase-admin": "^8.9.0",
+    "firebase-functions": "^3.3.0",
+    "firestore-schema-validator": "^0.8.0",
+    "helmet": "^3.22.0",
+    "hpp": "^0.2.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "multiparty": "^4.2.1",
+    "node-fetch": "^2.6.0",
+    "sharp": "^0.25.2",
+    "uniqid": "^5.2.0"
+  },
+  "devDependencies": {
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
+}
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2020-06-09T19:58:07.339Z] [functions] runtime dependency check dates: warning: 2020-05-21T00:00:00.000Z error: 2020-06-23T00:00:00.000Z
+[debug] [2020-06-09T19:58:07.339Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/email-cohen/services/cloudfunctions.googleapis.com  
+ 
+[debug] [2020-06-09T19:58:07.340Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/email-cohen/services/runtimeconfig.googleapis.com  
+ 
+[debug] [2020-06-09T19:58:10.120Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:11.367Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2020-06-09T19:58:11.372Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/email-cohen/adminSdkConfig  
+ 
+[debug] [2020-06-09T19:58:13.044Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:11 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:13.046Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/email-cohen/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2020-06-09T19:58:16.526Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:15 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  functions: preparing functions directory for uploading... 
+[debug] [2020-06-09T19:58:16.532Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/email-cohen/configs  
+ 
+[debug] [2020-06-09T19:58:20.929Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:19 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  functions: packaged functions (72.53 KB) for uploading 
+[debug] [2020-06-09T19:58:31.979Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/projects/email-cohen/locations/-/functions  
+ 
+[debug] [2020-06-09T19:58:35.157Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:33 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:35.160Z] >>> HTTP REQUEST POST https://cloudfunctions.googleapis.com/v1/projects/email-cohen/locations/us-central1/functions:generateUploadUrl  
+ 
+[debug] [2020-06-09T19:58:37.115Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:37.117Z] >>> HTTP REQUEST PUT https://storage.googleapis.com/gcf-upload-us-central1-5e0710b2-c447-4c20-ac0c-4180990d9cbf/48260394-51dd-4e7e-916a-9fe37a63bab6.zip?GoogleAccessId=service-332893832308@gcf-admin-robot.iam.gserviceaccount.com&Expires=1591734515&Signature=Vr8qXlagpNBSI1I4wIR%2Bglxmkh42VPZvNGih7XW0DG5UIS4bonb82eE1v4rD6lhP0cD43N%2FIFE4O0HHwYF%2FaDJq8JP6bUaMGIZEtLZ5Ezdhex07%2F1jwVPeEURp8JY9Gbyk3LtQYr5gwbAtVTLXhaRSZJGWf6xDjHuUH3L37mNQNKi9yXws60TQGpqtHgIR7oM2Y2Udm71%2B8MyK53Du%2BfqRbw2CIFrVuchhQcdvQjp%2BFXtUtGQpw%2BfVEOLHk1CAWxkUrb38%2Fxd4deKtwLYZ5KWeJdz8gUKVu7sXH0qbgeKuM1NaRbmzTCgYgkWzZnqnFblmg1a1svkyLSz%2Fsc2DIXiQ%3D%3D  
+ <request body omitted>
+[debug] [2020-06-09T19:58:40.995Z] <<< HTTP RESPONSE 200 {"x-guploader-uploadid":"AAANsUlX3MkkHMbRPAdyxwuMkuS5IVPphEF-DewcZuSfoivfPZqfd9Vdh-WXZgiJNz17dU-v6j5osG0lWJw37EcULY8","etag":"\"0344eec91c89c02388aeb464815cc29d\"","x-goog-generation":"1591732720102507","x-goog-metageneration":"1","x-goog-hash":"crc32c=TwZoMw==, md5=A0TuyRyJwCOIrrRkgVzCnQ==","x-goog-stored-content-length":"74273","x-goog-stored-content-encoding":"identity","vary":"Origin","content-length":"0","date":"Tue, 09 Jun 2020 19:58:40 GMT","server":"UploadServer","content-type":"text/html; charset=UTF-8","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""}
+[info] +  functions: functions folder uploaded successfully 
+[info] i  hosting[email-cohen]: beginning deploy... 
+[info] i  hosting[email-cohen]: found 32 files in dist/emailcli 
+[debug] [2020-06-09T19:58:42.771Z] [hosting] hash cache [ZGlzdFxlbWFpbGNsaQ] stored for 32 files
+[debug] [2020-06-09T19:58:42.772Z] [hosting][hash queue][FINAL] {"max":1613,"min":0,"avg":255.4375,"active":0,"complete":32,"success":32,"errored":0,"retried":0,"total":32,"elapsed":1629}
+[debug] [2020-06-09T19:58:42.772Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/email-cohen/versions/1fcbcc482c78cdde:populateFiles  
+ <request body omitted>
+[debug] [2020-06-09T19:58:45.372Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:44 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:45.375Z] [hosting][populate queue][FINAL] {"max":2604,"min":2604,"avg":2604,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":2606}
+[debug] [2020-06-09T19:58:45.376Z] [hosting] uploads queued: 2
+[debug] [2020-06-09T19:58:49.231Z] [hosting][upload queue][FINAL] {"max":3858,"min":3701,"avg":3779.5,"active":0,"complete":2,"success":2,"errored":0,"retried":0,"total":2,"elapsed":3859}
+[info] +  hosting[email-cohen]: file upload complete 
+[debug] [2020-06-09T19:58:49.234Z] [hosting] deploy completed after 8196ms
+[info] i  functions: updating Node.js 8 function webApi(us-central1)... 
+[debug] [2020-06-09T19:58:50.123Z] Trigger is:  {"httpsTrigger":{}}
+[debug] [2020-06-09T19:58:50.126Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/email-cohen/services/cloudscheduler.googleapis.com  
+ 
+[debug] [2020-06-09T19:58:52.102Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:50 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:52.104Z] >>> HTTP REQUEST PATCH https://cloudfunctions.googleapis.com/v1/projects/email-cohen/locations/us-central1/functions/webApi {"updateMask":"sourceUploadUrl,name,labels,runtime,environmentVariables,httpsTrigger"} 
+ {"sourceUploadUrl":"https://storage.googleapis.com/gcf-upload-us-central1-5e0710b2-c447-4c20-ac0c-4180990d9cbf/48260394-51dd-4e7e-916a-9fe37a63bab6.zip?GoogleAccessId=service-332893832308@gcf-admin-robot.iam.gserviceaccount.com&Expires=1591734515&Signature=Vr8qXlagpNBSI1I4wIR%2Bglxmkh42VPZvNGih7XW0DG5UIS4bonb82eE1v4rD6lhP0cD43N%2FIFE4O0HHwYF%2FaDJq8JP6bUaMGIZEtLZ5Ezdhex07%2F1jwVPeEURp8JY9Gbyk3LtQYr5gwbAtVTLXhaRSZJGWf6xDjHuUH3L37mNQNKi9yXws60TQGpqtHgIR7oM2Y2Udm71%2B8MyK53Du%2BfqRbw2CIFrVuchhQcdvQjp%2BFXtUtGQpw%2BfVEOLHk1CAWxkUrb38%2Fxd4deKtwLYZ5KWeJdz8gUKVu7sXH0qbgeKuM1NaRbmzTCgYgkWzZnqnFblmg1a1svkyLSz%2Fsc2DIXiQ%3D%3D","name":"projects/email-cohen/locations/us-central1/functions/webApi","labels":{"deployment-tool":"cli-firebase"},"httpsTrigger":{},"runtime":"nodejs8","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"email-cohen\",\"databaseURL\":\"https://email-cohen.firebaseio.com\",\"storageBucket\":\"email-cohen.appspot.com\",\"locationId\":\"us-central\"}"}}
+[debug] [2020-06-09T19:58:54.208Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:54.213Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/projects/email-cohen/locations/-/functions  
+ 
+[debug] [2020-06-09T19:58:56.052Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:55 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:56.054Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:58:57.559Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:58:56 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:58:59.561Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:01.305Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:00 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:03.306Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:04.694Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:03 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:06.696Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:07.733Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:07 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:09.737Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:11.371Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:10 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:13.371Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:14.423Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:13 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:16.424Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:17.961Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:17 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:19.962Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:21.374Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:23.375Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:24.936Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:24 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:26.938Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/ZW1haWwtY29oZW4vdXMtY2VudHJhbDEvd2ViQXBpL2wzMS1Dd2NhS0tz  
+ 
+[debug] [2020-06-09T19:59:28.041Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:27 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] +  functions[webApi(us-central1)]: Successful update operation.  
+[debug] [2020-06-09T19:59:28.056Z] [
+  {
+    "config": {
+      "public": "dist/emailcli",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "email-cohen"
+    },
+    "site": "email-cohen",
+    "version": "sites/email-cohen/versions/1fcbcc482c78cdde"
+  }
+]
+[info] i  hosting[email-cohen]: finalizing version... 
+[debug] [2020-06-09T19:59:28.074Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/email-cohen/versions/1fcbcc482c78cdde?updateMask=status  
+ {"status":"FINALIZED"}
+[debug] [2020-06-09T19:59:30.190Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:29 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:30.191Z] [hosting] finalized version for email-cohen: {"name":"sites/email-cohen/versions/1fcbcc482c78cdde","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2020-06-09T19:58:14.691572Z","createUser":{"email":"eliav.s.cohen@gmail.com"},"finalizeTime":"2020-06-09T19:59:29.400491Z","finalizeUser":{"email":"eliav.s.cohen@gmail.com"}}
+[info] +  hosting[email-cohen]: version finalized 
+[info] i  hosting[email-cohen]: releasing new version... 
+[debug] [2020-06-09T19:59:30.194Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/email-cohen/releases?version_name=sites/email-cohen/versions/1fcbcc482c78cdde  
+ {"message":null}
+[debug] [2020-06-09T19:59:31.829Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 09 Jun 2020 19:59:31 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-09T19:59:31.829Z] [hosting] release: {"name":"sites/email-cohen/releases/1591732771072282","version":{"name":"sites/email-cohen/versions/1fcbcc482c78cdde","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}},"type":"DEPLOY","releaseTime":"2020-06-09T19:59:31Z"}
+[info] +  hosting[email-cohen]: release complete 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/email-cohen/overview
+[info] Hosting URL: https://email-cohen.web.app

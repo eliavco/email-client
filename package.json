@@ -12,8 +12,8 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"deployWeb": "npm run buildWeb && firebase deploy",
-		"packDesktop": "electron-builder --dir",
-		"distDesktop": "electron-builder"
+		"packDesktop": "tsc main.ts && electron-builder --dir",
+		"distDesktop": "tsc main.ts && electron-builder"
 	},
 	"private": true,
 	"dependencies": {
@@ -36,6 +36,7 @@
 		"@types/jquery": "^3.3.38",
 		"bootstrap": "^4.4.1",
 		"classlist.js": "1.1.20150312",
+		"electron-updater": "^4.3.1",
 		"rxjs": "~6.5.4",
 		"timeago.js": "^4.0.2",
 		"tslib": "^1.10.0",

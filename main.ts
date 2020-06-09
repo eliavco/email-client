@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 
+const { autoUpdater } = require('electron-updater');
+
 function isDev() {
 	return process.mainModule.filename.indexOf('app.asar') === -1;
 }
@@ -24,7 +26,7 @@ function createWindow() {
 		//   preload: path.join(__dirname, "preload.js"),
 		// },
 		width: 800,
-		icon: path.join(__dirname, '/dist/emailcli/assets/logos/logo.png'),
+		icon: path.join(__dirname, '/dist/emailcli/assets/logos/logo-semi.png'),
 	});
 
 	// and load the index.html of the app.
@@ -46,6 +48,8 @@ function createWindow() {
 		// when you should delete the corresponding element.
 		mainWindow = null;
 	});
+
+	autoUpdater.checkForUpdatesAndNotify();
 }
 
 // This method will be called when Electron has finished

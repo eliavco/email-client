@@ -49,3 +49,4 @@ localhost.crt
 localhost.key
 
 main.js
+**/serviceAccount.json
