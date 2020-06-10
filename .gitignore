@@ -50,3 +50,5 @@ localhost.key
 
 main.js
 **/serviceAccount.json
+
+**/config.env

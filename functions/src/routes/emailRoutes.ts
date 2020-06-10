@@ -14,7 +14,7 @@ router
 
 router
 	.route('/:id')
-	.get(babyController.getBaby)
+	.get(babyController.createEmail)
 	.put(babyController.updateBabyRating)
 	.patch(babyController.updateBaby)
 	.delete(babyController.deleteBaby);

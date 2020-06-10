@@ -2,7 +2,9 @@ const multer = require('multer');
 const sharp = require('sharp');
 
 const factory = require('./factoryGenerator');
-const catchAsyncC = require('./../utils/catchAsync')
+const catchAsyncC = require('./../utils/catchAsync');
+
+const EmailModel = require('./../models/emailModel');
 
 // Image upload generating
 const multerFilter = (req: any, file: any, cb: Function) => {
@@ -51,3 +53,11 @@ exports.deleteBaby = factory.delete('babies');
 exports.makeQueries = factory.makeQueries({});
 
 exports.getDownloadableLink = factory.getDownloadableLink('babies');
+
+exports.createEmail = catchAsyncC((async (req: any, res: any, next: any) => {
+	const info = await EmailModel.create({subject: 'jhdaha'});
+	res.status(201).json({
+		status: 'success',
+		data: info
+	});
+}));

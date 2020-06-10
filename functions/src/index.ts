@@ -2,6 +2,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
+import process = require('process');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -11,11 +12,39 @@ const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const compression = require('compression');
 const multer = require('multer');
+// const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
-const babyRouter = require('./routes/babyRoutes');
+const emailRouter = require('./routes/emailRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-// const setUpModels = require('./models/model');
+const fs = require('fs');
+
+fs.readFileSync(__dirname + '/config.env', 'utf8').split('\r\n').forEach((line: string) => {
+	if (line.indexOf('=') > -1) {
+		process.env[line.substring(0, line.indexOf('='))] = line.substring(line.indexOf('=') + 1);
+	}
+});
+
+// Change Between local and remote connections:
+//  change DB value to O in config.env
+//  open a server by typing 'mongod' in a powershell
+const DBOnline = process.env.DATABASE!.replace(
+	'<PASSWORD>',
+	process.env.DATABASE_PASSWORD!
+);
+const DBLocal = process.env.DATABASE_LOCAL;
+const DB = process.env.DB === 'L' ? DBLocal : DBOnline;
+mongoose
+	.connect(DB, {
+		useNewUrlParser: true,
+		useCreateIndex: true,
+		useFindAndModify: false,
+		useUnifiedTopology: process.env.FUNCTIONS_EMULATOR ? true : false,
+	})
+	.then(() => {
+		// console.log('DB connected');
+	});
 
 //initialize firebase inorder to access its services
 if (process.env.FUNCTIONS_EMULATOR) {
@@ -52,28 +81,29 @@ main.enable('trust proxy');
 main.use(cors());
 main.options('*', cors());
 
-// const db = admin.firestore();
-// const bucket = admin.storage().bucket();
-
-// const dbm = setUpModels();
+const db = admin.firestore();
+const bucket = admin.storage().bucket();
 
 main.use(multer().none());
 // HELMET
 main.use(helmet());
 main.use((req: any, res, next) => {
-	console.log(req);
-	console.log(req.body);
+	req.requestTime = new Date().toISOString();
+	req.db = db;
+	req.st = bucket;
+	next();
+});
+
+main.post('/submit', async (req: any, res: any, next) => {
+	// incoming mails
+	console.log('ok');
+	console.log(process.env.DATABASE!);
 	res.status(201).json({ status: 'OK' });
-	// req.requestTime = new Date().toISOString();
-	// req.db = db;
-	// req.st = bucket;
-	// req.dbm = dbm;
-	// next();
 });
 
 // Rate limit
 const limiter = rateLimit({
-	max: 500,
+	max: 250,
 	windowMs: 60 * 60 * 1000,
 	message: {
 		status: 'error',
@@ -97,7 +127,7 @@ main.use(compression());
 
 main.use(express.urlencoded({ extended: true }));
 main.use(express.json({
-	limit: '120kb'
+	limit: '200kb'
 }));
 main.use(cookieParser());
 
@@ -109,7 +139,7 @@ app.get('/try', async (req, res) => {
 	res.status(200).json({ status: 'OK' });
 });
 
-app.use('/babies', babyRouter);
+app.use('/emails', emailRouter);
 
 app.all('/*', async (req, res, next) => {
 	next(new AppError(`The URL path ${req.originalUrl} was not found`, 404));
