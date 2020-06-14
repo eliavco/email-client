@@ -149,4 +149,4 @@ app.all('/*', async (req, res, next) => {
 app.use(globalErrorHandler);
 
 //define google cloud function name
-export const webApi = functions.https.onRequest(main);
+//export const webApi = functions.https.onRequest(main);
