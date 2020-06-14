@@ -11,7 +11,7 @@
 		"buildWeb": "ng build",
 		"test": "ng test",
 		"lint": "ng lint",
-		"deployWeb": "npm run buildWeb && firebase deploy",
+		"deployWeb": "npm run buildWeb && firebase deploy --only hosting",
 		"packDesktop": "tsc main.ts && electron-builder --dir",
 		"distDesktop": "tsc main.ts && electron-builder"
 	},
