@@ -3,6 +3,26 @@
   "files.exclude": {
     "build": true,
     ".vscode": true,
-    ".firebase": true
+    ".firebase": true,
+    "dist": true,
+    "firebase.json": true,
+    "e2e": true,
+    "karma.conf.js": true,
+    "tsconfig.spec.json": true,
+    "tsconfig.app.json": true,
+    "tslint.json": true,
+    "tsconfig.json": true,
+    "localhost.crt": true,
+    "main.js": true,
+    "browserslist": true,
+    "localhost.key": true,
+    ".firebaserc": true,
+    "functions": true,
+    "node_modules": true,
+    ".editorconfig": true,
+    "package-lock.json": true,
+    "src\\test.ts": true,
+    "src\\polyfills.ts": true,
+    "src\\environments": true
   }
 }
