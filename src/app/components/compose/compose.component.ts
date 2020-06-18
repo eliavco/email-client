@@ -11,7 +11,7 @@ export class ComposeComponent implements OnInit {
 	constructor(private titleService: Title) { }
 
 	ngOnInit(): void {
-		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Home`);
+		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Compose`);
 	}
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { faBackward, faTrash, faArchive } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,7 +16,7 @@ export class EmailComponent implements OnInit {
 	email: Email;
 	icons = { faBackward, faTrash, faArchive};
 
-	constructor(private route: ActivatedRoute, private emailsService: EmailsService) { }
+	constructor(private route: ActivatedRoute, private emailsService: EmailsService, private titleService: Title) { }
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(params => {
@@ -27,6 +28,7 @@ export class EmailComponent implements OnInit {
 	refreshEmail(): void {
 		this.emailsService.getEmail(this.id).subscribe(email => {
 			this.email = this.parseEmail((email as any).data.doc);
+			this.titleService.setTitle(`${(window as any).bkBaseTitle} | ${this.email.subject}`);
 			if (!this.email.read) { this.emailsService.makeReadEmail(this.id).subscribe(); }
 		});
 	}
