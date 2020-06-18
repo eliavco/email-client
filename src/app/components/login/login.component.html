@@ -1,30 +1,83 @@
 <div class="col-md-10 offset-md-1 mt-5 el-wrap">
-	<div class="card">
-		<h4 class="card-header">Login To your Account</h4>
-		<div class="card-body">
-			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input type="text" formControlName="email" class="form-control" placeholder="email@example.com"
-						[ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-					<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-						<div *ngIf="f.email.errors.required">Email is required</div>
+	<span class="user-select-none">Don't have an account?</span>
+	<label class="custom-control custom-switch">
+		<input type="checkbox" id="should-signup" [(ngModel)]="newUser" class="custom-control-input">
+		<span class="custom-control-label switch" for="should-signup"></span>
+	</label>
+	<ng-container *ngIf="newUser">
+		<div class="card">
+			<h4 class="card-header">Signup To your Account</h4>
+			<div class="card-body">
+				<form [formGroup]="loginFormNew" (ngSubmit)="onSubmit()">
+					<div class="form-group">
+						<label for="nname">Full Name</label>
+						<input type="text" id="nname" formControlName="nname" class="form-control" placeholder="Your Name"
+							[ngClass]="{ 'is-invalid': submitted && fn.nname.errors }" />
+						<div *ngIf="submitted && fn.nname.errors" class="invalid-feedback">
+							<div *ngIf="fn.nname.errors.required">Name is required</div>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" formControlName="password" class="form-control" placeholder="•••••••••"
-						[ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-						<div *ngIf="f.password.errors.required">Password is required</div>
+					<div class="form-group">
+						<label for="nemail">Email</label>
+						<input type="text" id="nemail" formControlName="nemail" class="form-control" placeholder="email@example.com"
+							[ngClass]="{ 'is-invalid': submitted && fn.nemail.errors }" />
+						<div *ngIf="submitted && fn.nemail.errors" class="invalid-feedback">
+							<div *ngIf="fn.nemail.errors.required">Email is required</div>
+						</div>
 					</div>
-				</div>
-				<button [disabled]="loading" class="btn btn-primary">
-					<!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
-					Login
-				</button>
-				<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-			</form>
+					<div class="form-group">
+						<label for="npassword">Password</label>
+						<input type="password" id="npassword" formControlName="npassword" class="form-control" placeholder="•••••••••"
+							[ngClass]="{ 'is-invalid': submitted && fn.npassword.errors }" />
+						<div *ngIf="submitted && fn.npassword.errors" class="invalid-feedback">
+							<div *ngIf="fn.npassword.errors.required">Password is required</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="npasswordConfirm">Confirm Password</label>
+						<input type="password" id="npasswordConfirm" formControlName="npasswordConfirm" class="form-control" placeholder="•••••••••"
+							[ngClass]="{ 'is-invalid': submitted && fn.npasswordConfirm.errors }" />
+						<div *ngIf="submitted && fn.npasswordConfirm.errors" class="invalid-feedback">
+							<div *ngIf="fn.npasswordConfirm.errors.required">Confirm Password is required</div>
+						</div>
+					</div>
+					<button [disabled]="loading" class="btn btn-primary">
+						<!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
+						Signup
+					</button>
+					<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+				</form>
+			</div>
 		</div>
-	</div>
+	</ng-container>
+	<ng-container *ngIf="!newUser">
+		<div class="card">
+			<h4 class="card-header">Login To your Account</h4>
+			<div class="card-body">
+				<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="text" id="email" formControlName="email" class="form-control" placeholder="email@example.com"
+							[ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+						<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+							<div *ngIf="f.email.errors.required">Email is required</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" id="password" formControlName="password" class="form-control" placeholder="•••••••••"
+							[ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+						<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+							<div *ngIf="f.password.errors.required">Password is required</div>
+						</div>
+					</div>
+					<button [disabled]="loading" class="btn btn-primary">
+						<!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
+						Login
+					</button>
+					<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+				</form>
+			</div>
+		</div>
+	</ng-container>
 </div>

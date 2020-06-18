@@ -12,10 +12,12 @@ import { AuthenticationService } from './../../services/authentication/authentic
 })
 export class LoginComponent implements OnInit {
 	loginForm: FormGroup;
+	loginFormNew: FormGroup;
 	loading = false;
 	submitted = false;
 	returnUrl: string;
 	error = '';
+	newUser = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -34,6 +36,12 @@ export class LoginComponent implements OnInit {
 			email: ['', Validators.required],
 			password: ['', Validators.required]
 		});
+		this.loginFormNew = this.formBuilder.group({
+			nname: ['', Validators.required],
+			nemail: ['', Validators.required],
+			npassword: ['', Validators.required],
+			npasswordConfirm: ['', Validators.required]
+		});
 
 		// get return url from route parameters or default to '/'
 		// tslint:disable-next-line: no-string-literal
@@ -42,25 +50,45 @@ export class LoginComponent implements OnInit {
 
 	// convenience getter for easy access to form fields
 	get f() { return this.loginForm.controls; }
+	get fn() { return this.loginFormNew.controls; }
 
 	onSubmit() {
 		this.submitted = true;
 
-		// stop here if form is invalid
-		if (this.loginForm.invalid) {
-			return;
-		}
+		if (this.newUser) {
+			// stop here if form is invalid
+			if (this.loginFormNew.invalid) {
+				return;
+			}
 
-		this.loading = true;
-		this.authenticationService.login(this.f.email.value, this.f.password.value)
-			.pipe(first())
-			.subscribe(
-				data => {
-					this.router.navigate([this.returnUrl]);
-				},
-				error => {
-					this.error = error;
-					this.loading = false;
-				});
+			this.loading = true;
+			this.authenticationService.signup(this.fn.nname.value, this.fn.nemail.value, this.fn.npassword.value, this.fn.npasswordConfirm.value)
+				.pipe(first())
+				.subscribe(
+					data => {
+						this.router.navigate([this.returnUrl]);
+					},
+					error => {
+						this.error = error;
+						this.loading = false;
+					});
+		} else {
+			// stop here if form is invalid
+			if (this.loginForm.invalid) {
+				return;
+			}
+
+			this.loading = true;
+			this.authenticationService.login(this.f.email.value, this.f.password.value)
+				.pipe(first())
+				.subscribe(
+					data => {
+						this.router.navigate([this.returnUrl]);
+					},
+					error => {
+						this.error = error;
+						this.loading = false;
+					});
+		}
 	}
 }

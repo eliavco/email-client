@@ -9,6 +9,13 @@
 html {
 	font-size: 62.5%;
 	box-sizing: border-box;
+	
+	@media (max-width: map-get($grid-breakpoints, lg)) {
+		font-size: 50%;
+	}
+	@media (max-width: map-get($grid-breakpoints, ms)) {
+		font-size: 40%;
+	}
 }
 
 body {

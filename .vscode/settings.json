@@ -22,6 +22,26 @@
     "package-lock.json": true,
     "src\\test.ts": true,
     "src\\polyfills.ts": true,
-    "src\\environments": true
+    "src\\environments": true,
+    "package.json": true,
+    "README.md": true,
+    "main.ts": true,
+    ".gitignore": true,
+    "dist": true,
+    "src\\app\\app.component.spec.ts": true,
+    "angular.json": true,
+    "src\\assets": true,
+    "src\\scss": true,
+    "src\\favicon.ico": true,
+    "src\\main.ts": true,
+    "src\\app\\directives": true,
+    "src\\app\\models": true,
+    "src\\app\\pipes": true,
+    "src\\app\\interfaces": true,
+    "src\\app\\services\\GoogleAnalyticsEvents": true,
+    "src\\app\\utils": true,
+    "src\\app\\components\\alerts": true,
+    "src\\app\\components\\global-navbar": true,
+    "src\\app\\components\\login": true
   }
 }

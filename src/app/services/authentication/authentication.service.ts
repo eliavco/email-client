@@ -20,8 +20,29 @@ export class AuthenticationService {
 		return this.currentUserSubject.value;
 	}
 
+	isRole(role: string): boolean {
+		const roles = ['user', 'guide', 'lead-guide', 'admin'];
+		const userRole = (this.currentUserSubject.value as any).data.user.role;
+		return roles.indexOf(userRole) >= roles.indexOf(role);
+	}
+
+	isAuthenticated(): boolean {
+		return this.currentUserSubject.value ? true : false;
+	}
+
 	login(email: string, password: string) {
 		return this.http.post<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/login`, { email, password })
+			.pipe(map(user => {
+				// store user details and jwt token in local storage to keep user logged in between page refreshes
+				localStorage.setItem('currentUser', JSON.stringify(user));
+				this.currentUserSubject.next(user);
+				return user;
+			}));
+	}
+
+	signup(name: string, email: string, password: string, passwordConfirm: string) {
+		return this.http.post<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/signup`,
+			{ name, email, password, passwordConfirm })
 			.pipe(map(user => {
 				// store user details and jwt token in local storage to keep user logged in between page refreshes
 				localStorage.setItem('currentUser', JSON.stringify(user));

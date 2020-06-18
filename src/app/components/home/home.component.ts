@@ -15,14 +15,16 @@ export class HomeComponent implements OnInit {
 	loading = false;
 	users: User[];
 
-	constructor(private userService: UserService, private titleService: Title) { }
+	constructor(private userService: UserService, private titleService: Title, private authenticationService: AuthenticationService) { }
 
 	ngOnInit() {
 		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Home`);
-		this.loading = true;
-		this.userService.getAll().pipe(first()).subscribe(users => {
-			this.loading = false;
-			this.users = (users as any).data.documents;
-		});
+		if (this.authenticationService.isAuthenticated() && this.authenticationService.isRole('admin')) {
+			this.loading = true;
+			this.userService.getAll().pipe(first()).subscribe(users => {
+				this.loading = false;
+				this.users = (users as any).data.documents;
+			});
+		}
 	}
 }

@@ -1,3 +1,28 @@
 * {
 	font-size: 2.2rem;
 }
+
+.custom-control {
+	min-height: 4rem;
+}
+
+.switch::before {
+	width: 5rem;
+	height: 3rem;
+}
+
+.custom-switch {
+	padding-left: 2.5rem;
+}
+
+.custom-switch .custom-control-input:checked ~ .switch::after {
+    transform: translateX(3rem);
+}
+
+.switch::after {
+    width: calc(2rem - 4px);
+	height: calc(3rem - 4px);
+	border-radius: 20%;
+}
+
+// .custom-control-label::before ,.custom-control-label::after{width:20px; height:20px}

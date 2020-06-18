@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { CookieService } from 'ngx-cookie-service';
 
 // services
 import { GoogleAnalyticsEventsService } from './services/GoogleAnalyticsEvents/GoogleAnalyticsEvents.service';
@@ -58,6 +59,7 @@ import { ComposeComponent } from './components/compose/compose.component';
 		ExampleService,
 		AlertsService,
 		BabiesService,
+		CookieService
 	],
 	bootstrap: [
 		AppComponent
