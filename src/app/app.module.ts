@@ -1,12 +1,11 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ExampleComponent } from './components/example/example.component';
 
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
@@ -18,34 +17,27 @@ import { ExampleService } from './services/example/example.service';
 import { AlertsService } from './services/alerts/alerts.service';
 import { BabiesService } from './services/babies/babies.service';
 
+// Utils
+import { JwtInterceptor } from './utils/jwt.interceptor';
+import { ErrorInterceptor } from './utils/error.interceptor';
+
 // Components
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { GlobalNavbarComponent } from './components/global-navbar/global-navbar.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { HomeComponent } from './components/home/home.component';
-import { DiscoverComponent } from './components/discover/discover.component';
-import { NewNameComponent } from './components/new-name/new-name.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
-import { PodiumComponent } from './components/podium/podium.component';
-import { PhotosParentsComponent } from './components/photos-parents/photos-parents.component';
-import { RulesComponent } from './components/rules/rules.component';
-import { ConfettiComponent } from './components/confetti/confetti.component';
+import { LoginComponent } from './components/login/login.component';
+import { ComposeComponent } from './components/compose/compose.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		ExampleComponent,
 		NotFoundComponent,
 		GlobalNavbarComponent,
 		AlertsComponent,
 		HomeComponent,
-		DiscoverComponent,
-		NewNameComponent,
-		WelcomeComponent,
-		PodiumComponent,
-		PhotosParentsComponent,
-		RulesComponent,
-		ConfettiComponent
+		LoginComponent,
+		ComposeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -59,6 +51,8 @@ import { ConfettiComponent } from './components/confetti/confetti.component';
 		FormsModule,
 	],
 	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 		GoogleAnalyticsEventsService,
 		Title,
 		ExampleService,

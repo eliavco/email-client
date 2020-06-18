@@ -11,6 +11,6 @@
 
 .navbar {
 	@media (max-width: map-get($grid-breakpoints, lg)) {
-		direction: ltr;
+		direction: rtl;
 	}
 }

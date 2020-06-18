@@ -2,17 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
-import { DiscoverComponent } from './components/discover/discover.component';
-import { NewNameComponent } from './components/new-name/new-name.component';
+import { ComposeComponent } from './components/compose/compose.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { RulesComponent } from './components/rules/rules.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './utils/auth.guard';
 
 const routes: Routes = [
-	{ path: 'app', component: HomeComponent },
-	{ path: 'discover', component: DiscoverComponent },
-	{ path: 'new-name', component: NewNameComponent },
-	{ path: 'rules', component: RulesComponent },
-	{ path: '', component: HomeComponent },
+	{ path: 'app', component: HomeComponent, canActivate: [AuthGuard] },
+	{ path: 'compose', component: ComposeComponent, canActivate: [AuthGuard] },
+	{ path: 'login', component: LoginComponent },
+	{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
 	{ path: '**', component: NotFoundComponent },
 ];
 

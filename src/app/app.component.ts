@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { User } from './models/user';
+
 // tslint:disable-next-line: ban-types
 declare let gtag: Function;
 declare let mgaids: Array<string>;
@@ -11,9 +14,10 @@ declare let mgaids: Array<string>;
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-	title = 'michalsfirstborn';
+	title = 'Email';
+	currentUser: User;
 
-	constructor(public router: Router) {
+	constructor(public router: Router, private authenticationService: AuthenticationService) {
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				mgaids.forEach(mgaid => {
@@ -25,10 +29,11 @@ export class AppComponent implements OnInit{
 				});
 			}
 		});
+		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 	}
 
 	ngOnInit(): void {
-		(window as any).bkBaseTitle = 'התינוק של מיכל';
+		(window as any).bkBaseTitle = 'Email';
 	}
 
 }

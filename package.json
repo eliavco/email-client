@@ -8,7 +8,7 @@
 		"ng": "ng",
 		"startWeb": "ng serve --ssl",
 		"startDesktop": "tsc main.ts && ng build --base-href ./ && electron .",
-		"buildWeb": "ng build",
+		"buildWeb": "ng build --prod",
 		"test": "ng test",
 		"lint": "ng lint",
 		"deployWeb": "npm run buildWeb && firebase deploy --only hosting",

@@ -4,9 +4,9 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<a class="navbar-brand" routerLink="/">
-		<img src="assets/logos/logo-transparent-blue-spaceship.png" height="30" class="d-inline-block align-top" alt="MichalsFirst Logo"
+		<img src="assets/logos/logo-semi.png" height="16" class="d-inline-block" alt="MichalsFirst Logo"
 			loading="lazy">
-		התינוק של מיכל
+		Email
 	</a>
 
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -16,6 +16,9 @@
 					<a class="nav-link user-select-none" [routerLink]="page.link">{{ page.title }}</a>
 				</li>
 			</ng-container>
+			<li class="nav-item" *ngIf="login">
+				<a class="nav-link user-select-none" (click)="logout()">Logout</a>
+			</li>
 		</ul>
 	</div>
 </nav>
