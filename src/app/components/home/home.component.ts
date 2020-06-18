@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 	refreshEmails() {
 		this.emailsService.getMyEmails().subscribe((emails) => {
 			this.emails = (emails as any).data.documents.map(this.parseEmail);
-			setTimeout(() => { this.sortEmails(); }, 2);
+			this.sortEmails();
 		});
 	}
 
