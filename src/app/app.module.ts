@@ -11,12 +11,16 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { CookieService } from 'ngx-cookie-service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const { environment } = require('./../environments/environment');
+
+const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 // services
 import { GoogleAnalyticsEventsService } from './services/GoogleAnalyticsEvents/GoogleAnalyticsEvents.service';
-import { ExampleService } from './services/example/example.service';
+import { EmailsService } from './services/emails/emails.service';
 import { AlertsService } from './services/alerts/alerts.service';
-import { BabiesService } from './services/babies/babies.service';
 
 // Utils
 import { JwtInterceptor } from './utils/jwt.interceptor';
@@ -50,15 +54,15 @@ import { ComposeComponent } from './components/compose/compose.component';
 		FontAwesomeModule,
 		ReactiveFormsModule,
 		FormsModule,
+		SocketIoModule.forRoot(config)
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 		GoogleAnalyticsEventsService,
 		Title,
-		ExampleService,
+		EmailsService,
 		AlertsService,
-		BabiesService,
 		CookieService
 	],
 	bootstrap: [

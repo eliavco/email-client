@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { first } from 'rxjs/operators';
+import { Socket } from 'ngx-socket-io';
 
-import { User } from './../../models/user';
-import { UserService } from './../../services/user/user.service';
+import { Email } from './../../interfaces/email';
+import { EmailsService } from './../../services/emails/emails.service';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 
 @Component({
@@ -13,18 +13,49 @@ import { AuthenticationService } from './../../services/authentication/authentic
 })
 export class HomeComponent implements OnInit {
 	loading = false;
-	users: User[];
+	emails: Email[];
 
-	constructor(private userService: UserService, private titleService: Title, private authenticationService: AuthenticationService) { }
+	sortEmails() {
+		this.emails.sort((a, b) => -(b.createdAt.getTime() - a.createdAt.getTime()));
+		this.emails.reverse();
+	}
+
+	constructor(
+		private emailsService: EmailsService,
+		private titleService: Title,
+		private authenticationService: AuthenticationService,
+		private socket: Socket) { }
 
 	ngOnInit() {
-		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Home`);
-		if (this.authenticationService.isAuthenticated() && this.authenticationService.isRole('admin')) {
-			this.loading = true;
-			this.userService.getAll().pipe(first()).subscribe(users => {
-				this.loading = false;
-				this.users = (users as any).data.documents;
-			});
-		}
+		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Inbox`);
+		this.refreshEmails();
+		this.socket.on('refresh_emails', () => { this.refreshEmails(); });
 	}
+
+	refreshEmails() {
+		this.emailsService.getMyEmails().subscribe((emails) => {
+			this.emails = (emails as any).data.documents.map(this.parseEmail);
+			setTimeout(() => { this.sortEmails(); }, 2);
+		});
+	}
+
+	parseEmail(email) {
+		email.createdAt = new Date(email.createdAt);
+		email.attachments = +email.attachments;
+		email.envelope = JSON.parse(email.envelope);
+		email.charsets = JSON.parse(email.charsets);
+		email.files = JSON.parse(email.files);
+		email.files.forEach((file) => {
+			const info = JSON.parse(email['attachment-info'])[file.fieldname];
+			if (info) {
+				if (info['content-id']) { file['content-id'] = info['content-id']; }
+				if (info.charset) { file.charset = info.charset; }
+			}
+		});
+		delete email['attachment-info'];
+		delete email['content-ids'];
+		email.headers = email.headers.split('\n').filter(header => header !== '');
+		return email;
+	}
+
 }

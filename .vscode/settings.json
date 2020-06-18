@@ -8,7 +8,6 @@
     "e2e": true,
     "karma.conf.js": true,
     "tsconfig.spec.json": true,
-    "tsconfig.app.json": true,
     "tslint.json": true,
     "tsconfig.json": true,
     "localhost.crt": true,
@@ -35,13 +34,14 @@
     "src\\favicon.ico": true,
     "src\\main.ts": true,
     "src\\app\\directives": true,
-    "src\\app\\models": true,
     "src\\app\\pipes": true,
-    "src\\app\\interfaces": true,
     "src\\app\\services\\GoogleAnalyticsEvents": true,
     "src\\app\\utils": true,
     "src\\app\\components\\alerts": true,
     "src\\app\\components\\global-navbar": true,
-    "src\\app\\components\\login": true
+    "src\\app\\components\\login": true,
+    "tsconfig.app.json": true,
+    "src\\app\\models": true,
+    "firebase-debug.log": true
   }
 }
