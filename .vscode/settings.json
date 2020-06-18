@@ -4,7 +4,6 @@
     "build": true,
     ".vscode": true,
     ".firebase": true,
-    "dist": true,
     "firebase.json": true,
     "e2e": true,
     "karma.conf.js": true,
