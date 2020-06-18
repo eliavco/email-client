@@ -33,6 +33,7 @@ import { AlertsComponent } from './components/alerts/alerts.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ComposeComponent } from './components/compose/compose.component';
+import { EmailComponent } from './components/email/email.component';
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,8 @@ import { ComposeComponent } from './components/compose/compose.component';
 		AlertsComponent,
 		HomeComponent,
 		LoginComponent,
-		ComposeComponent
+		ComposeComponent,
+		EmailComponent
 	],
 	imports: [
 		BrowserModule,

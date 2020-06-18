@@ -1,0 +1,21 @@
+@import "./../../../scss/abstract/variables";
+
+* {
+	font-size: 2rem;
+	line-height: 140%;
+}
+
+.right {
+	display: inline-block;
+	margin-left: auto;
+}
+
+.left {
+	display: inline-block;
+	margin-right: auto;
+}
+
+.card-header {
+	display: flex;
+	align-items: space-between;
+}

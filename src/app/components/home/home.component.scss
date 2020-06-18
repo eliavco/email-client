@@ -1,18 +1,84 @@
-@import './../../../scss/abstract/variables';
+@import "./../../../scss/abstract/variables";
 
-abe-header {
-  nav {
-    width: 100%;
-	@media (min-width: map-get($grid-breakpoints, sm)) {
-		width: 80%;
-	}
-  }
+* {
+	font-size: 2rem;
+	line-height: 140%;
 }
 
-.bg-main {
-	padding: 3rem;
+.card-header {
+	padding: 0;
+	border: 0;
+}
 
-	@media (max-width: map-get($grid-breakpoints, sm)) {
-		padding: 1.3rem;
+.row {
+	margin: 0;
+}
+
+.my-tab {
+	margin: 0;
+	border-radius: 0;
+	border: 0;
+}
+
+.active-tab {
+	border-bottom: 0;
+}
+
+.right {
+	display: inline-block;
+	margin-left: auto;
+}
+
+.left {
+	display: inline-block;
+	margin-right: auto;
+}
+
+.email-title {
+	display: flex;
+	align-items: space-between;
+	padding: .5rem;
+	border-radius: .3rem;
+
+	&:nth-child(even) {
+		background-color: #343a4022;
+	}
+	
+	&:not(:last-child) {
+		margin-bottom: 1rem;
+	}
+}
+
+ul {
+	padding: 0;
+}
+
+.line {
+	height: .1rem;
+	&-success {
+		background-color: var(--success);
+	}
+	&-primary {
+		background-color: var(--primary);
+	}
+	&-danger {
+		background-color: var(--danger);
+	}
+}
+
+a {
+	color: inherit;
+
+	&:hover,
+	&:active,
+	&:visited,
+	&:link {
+		color: inherit;
+	}
+
+	&:hover,
+	&:active {
+		color: var(--gray);
+		transition: all 0.3s;
 	}
 }

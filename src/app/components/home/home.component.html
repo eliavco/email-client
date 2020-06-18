@@ -1,12 +1,46 @@
 <div class="col-md-10 offset-md-1 mt-5">
 	<div class="card mt-4">
-		<h4 class="card-header">You're logged in!!</h4>
+		<div class="card-header row">
+			<div *ngFor="let tab of tabs" class="col-sm alert my-tab" [class.alert-secondary]="!tab.active"
+				[class.active-tab]="tab.active">
+				<a class="user-select-none my-button" (click)="tab.action()" [class.active-button]="tab.active">
+					<fa-icon [icon]="tab.icon"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;{{ tab.title }} <ng-container *ngIf="tab.unread && tab.unread > 0"><strong>{{ '('+tab.unread+')' }}</strong></ng-container>
+				</a>
+			</div>
+		</div>
+		<div class="line" [class.line-success]="tabActive == 'success'" [class.line-primary]="tabActive == 'primary'" [class.line-danger]="tabActive == 'danger'"></div>
 		<div class="card-body">
-			<h6>Emails for you</h6>
-			<div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-			<ul *ngIf="emails">
-				<li *ngFor="let email of emails">{{email.subject}}</li>
+			<ul *ngIf="displayEmails">
+				<li *ngFor="let email of displayEmails" class="email-title">
+					<div class="left">
+						<ng-container *ngIf="email.read">
+							<a [routerLink]="['/email', email._id]">{{email.subject}}</a>
+						</ng-container>
+						<ng-container *ngIf="!email.read">
+							<strong><a [routerLink]="['/email', email._id]">{{email.subject}}</a></strong>
+						</ng-container>
+					</div>
+					<div class="right">
+						<button *ngIf="!email.archived && !email.deleted" class="btn btn-warning"
+							(click)="archiveEmail(email._id, email.subject)">
+							<fa-icon [icon]="icons.faArchive"></fa-icon>
+						</button>
+						<button *ngIf="email.archived && !email.deleted" class="btn btn-primary"
+							(click)="unarchiveEmail(email._id, email.subject)">
+							<fa-icon [icon]="icons.faBoxOpen"></fa-icon>
+						</button>&nbsp;
+						<button *ngIf="!email.deleted" class="btn btn-danger"
+							(click)="deleteEmail(email._id, email.subject)">
+							<fa-icon [icon]="icons.faTrash"></fa-icon>
+						</button>
+						<button *ngIf="email.deleted" class="btn btn-primary"
+							(click)="restoreEmail(email._id, email.subject)">
+							<fa-icon [icon]="icons.faTrashRestore"></fa-icon>
+						</button>
+					</div>
+				</li>
 			</ul>
+			<ul *ngIf="!displayEmails || !displayEmails[0]">Nothing to show</ul>
 		</div>
 	</div>
 </div>

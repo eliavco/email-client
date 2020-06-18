@@ -1,0 +1,23 @@
+<div class="col-md-10 offset-md-1 mt-5">
+	<div class="card mt-4">
+		<div class="card-header">
+			<div class="left">
+				<a [routerLink]="['/']" style="color: var(--gray);">
+					<fa-icon [icon]="icons.faBackward"></fa-icon> Back
+				</a>
+				<h4 style="display: inline;">{{ email ? email.subject: 'Email' }}</h4>
+			</div>
+			<div class="right">
+				<ng-container *ngIf="email">
+					<span style="color:var(--gray);">Sent at: {{ formatDate(email.createdAt) }}&nbsp;</span>
+					<fa-icon *ngIf="email.archived" [icon]="icons.faArchive" style="color:var(--gray);"></fa-icon>&nbsp;
+					<fa-icon *ngIf="email.deleted" [icon]="icons.faTrash" style="color:var(--gray);"></fa-icon>
+				</ng-container>
+			</div>
+		</div>
+		<div class="card-body">
+			<div *ngIf="email">{{ email.subject }}</div>
+			<div *ngIf="!email">Nothing to show</div>
+		</div>
+	</div>
+</div>

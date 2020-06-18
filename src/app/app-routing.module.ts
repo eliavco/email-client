@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ComposeComponent } from './components/compose/compose.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
+import { EmailComponent } from './components/email/email.component';
 import { AuthGuard } from './utils/auth.guard';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
 	{ path: 'compose', component: ComposeComponent, canActivate: [AuthGuard] },
 	{ path: 'login', component: LoginComponent },
 	{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
+	{ path: 'email/:emailId', component: EmailComponent, canActivate: [AuthGuard] },
 	{ path: '**', component: NotFoundComponent },
 ];
 

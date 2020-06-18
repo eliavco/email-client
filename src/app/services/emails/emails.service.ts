@@ -14,4 +14,28 @@ export class EmailsService {
 	getMyEmails() {
 		return this.http.get(`${environment.apiUrl}/api/v${environment.apiVersion}/emails`);
 	}
+
+	getEmail(id: string) {
+		return this.http.get(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`);
+	}
+
+	deleteEmail(id: string) {
+		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`, { deleted: true });
+	}
+
+	archiveEmail(id: string) {
+		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`, { archived: true });
+	}
+
+	restoreEmail(id: string) {
+		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`, { deleted: false });
+	}
+
+	unarchiveEmail(id: string) {
+		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`, { archived: false });
+	}
+
+	makeReadEmail(id: string) {
+		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`, { read: true });
+	}
 }
