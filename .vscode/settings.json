@@ -37,11 +37,11 @@
     "src\\app\\pipes": true,
     "src\\app\\services\\GoogleAnalyticsEvents": true,
     "src\\app\\utils": true,
-    "src\\app\\components\\global-navbar": true,
     "src\\app\\components\\login": true,
     "tsconfig.app.json": true,
     "src\\app\\models": true,
     "firebase-debug.log": true,
-    "src\\app\\components\\alerts": true
+    "src\\app\\components\\alerts": true,
+    "src\\app\\components\\global-navbar": true
   }
 }

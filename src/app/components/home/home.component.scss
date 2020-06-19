@@ -27,11 +27,19 @@
 .right {
 	display: inline-block;
 	margin-left: auto;
+	
+	@media (max-width: map-get($grid-breakpoints, lg)) {
+		display: inherit;
+		text-align: right;
+	}
 }
 
 .left {
 	display: inline-block;
 	margin-right: auto;
+	@media (max-width: map-get($grid-breakpoints, lg)) {
+		display: inherit;
+	}
 }
 
 .email-title {
@@ -39,6 +47,9 @@
 	align-items: space-between;
 	padding: .5rem;
 	border-radius: .3rem;
+	@media (max-width: map-get($grid-breakpoints, lg)) {
+		display: inherit;
+	}
 
 	&:nth-child(even) {
 		background-color: #343a4022;

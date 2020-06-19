@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	refreshEmails() {
-		this.emailsService.getMyEmails().subscribe((emails) => {
+		this.emailsService.getMyEmails(true).subscribe((emails) => {
 			this.emails = (emails as any).data.documents.map(this.parseEmail);
 			this.sortEmails();
 			this.filterInbox();
@@ -89,18 +89,6 @@ export class HomeComponent implements OnInit {
 		email.createdAt = new Date(email.createdAt);
 		email.attachments = +email.attachments;
 		email.envelope = JSON.parse(email.envelope);
-		email.charsets = JSON.parse(email.charsets);
-		email.files = JSON.parse(email.files);
-		email.files.forEach((file) => {
-			const info = JSON.parse(email['attachment-info'])[file.fieldname];
-			if (info) {
-				if (info['content-id']) { file['content-id'] = info['content-id']; }
-				if (info.charset) { file.charset = info.charset; }
-			}
-		});
-		delete email['attachment-info'];
-		delete email['content-ids'];
-		email.headers = email.headers.split('\n').filter(header => header !== '');
 		return email;
 	}
 
@@ -130,6 +118,14 @@ export class HomeComponent implements OnInit {
 			this.refreshEmails();
 			this.alertsService.addToast(`'${subject}' restored`);
 		});
+	}
+
+	formatDate(date: Date): string {
+		return date.toLocaleString();
+	}
+
+	shorten(text: string, trim: number): string {
+		return text.length > trim ? `${text.substring(0, trim).trim()}...` : text;
 	}
 
 }

@@ -11,8 +11,8 @@ export class EmailsService {
 
 	constructor(private http: HttpClient) { }
 
-	getMyEmails() {
-		return this.http.get(`${environment.apiUrl}/api/v${environment.apiVersion}/emails`);
+	getMyEmails(min?: boolean){
+		return this.http.get(`${environment.apiUrl}/api/v${environment.apiVersion}/emails${ min ? '?fields=attachments,subject,envelope,createdAt,read,archived,deleted' : '' }`);
 	}
 
 	getEmail(id: string) {
