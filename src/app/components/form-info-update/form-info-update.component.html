@@ -1,0 +1,28 @@
+<form class="mt-5">
+	<section>
+
+		<div class="form__group form__photo-upload">
+			<img class="form__user-photo" [src]="user.photo"
+				alt="User photo"><!-- This is called a mimetype mime like water in hebrew-->
+				<input class="form__upload" (change)="onFileSelect($event)"
+				type="file" accept="image/*" id="photo" name="photo">
+				<label class="btn-text" id="photo__label"
+				for="photo" [title]="selectorTitle.length > 0 ? selectorTitle : 'Choose new photo'">{{ selectorTitleMin.length > 0 ? selectorTitleMin : 'Choose new photo' }}</label></div>
+
+	</section>
+
+	<section [formGroup]="form">
+
+		<div class="form-group">
+			<label for="name">Full Name</label>
+			<input type="text" class="form-control" formControlName="name" placeholder="{{ user.name }}" id="name" name="name" aria-describedby="nameHelp">
+			<small id="textHelp" class="form-text text-muted user-select-none">If you want to change your permissions, please contact the site administrator. Your status: '{{ user.role }}'</small>
+		</div>
+		<div class="form-group">
+			<label for="email">Email Address</label>
+			<input type="email" class="form-control" formControlName="email" placeholder="{{ user.email }}" name="email" id="email">
+		</div>
+		<button type="submit" class="btn btn-primary" (click)="onSubmit()">Save</button>
+	
+	</section>
+</form>

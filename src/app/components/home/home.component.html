@@ -14,15 +14,15 @@
 				<li *ngFor="let email of displayEmails" class="email-title">
 					<div class="left">
 						<ng-container *ngIf="email.read">
-							<a [routerLink]="['/email', email._id]">{{ shorten(email.subject, 15) }}<span style="color: var(--gray); font-size: 1.5rem;">: {{ email.envelope.from }}</span></a>
+							<a [routerLink]="['/email', email._id]">{{ shorten(email.subject, 15) }}<span style="color: var(--gray); font-size: 1.5rem;"> {{ email.envelope.from }}</span></a>
 						</ng-container>
 						<ng-container *ngIf="!email.read">
-							<strong><a [routerLink]="['/email', email._id]">{{ shorten(email.subject, 15) }}<span style="color: var(--gray); font-size: 1.5rem;">: {{ email.envelope.from }}</span></a></strong>
+							<strong><a [routerLink]="['/email', email._id]">{{ shorten(email.subject, 15) }}<span style="color: var(--gray); font-size: 1.5rem;"> {{ email.envelope.from }}</span></a></strong>
 						</ng-container>
 					</div>
 					<div class="right">
-						<div *ngIf="email.attachments > 0" style="display: inline-block; color: var(--gray); margin-right: 1rem;">{{ email.attachments }} file{{ email.attachments > 1 ? 's' : '' }}</div>
-						<div style="display: inline-block; color: var(--gray); margin-right: 1rem;">{{ formatDate(email.createdAt) }}</div>
+						<div *ngIf="email.attachments > 0" style="display: inline-block; color: var(--gray); margin-right: 1rem; font-size: 1.5rem;">{{ email.attachments }} file{{ email.attachments > 1 ? 's' : '' }}</div>
+						<div style="display: inline-block; color: var(--gray); margin-right: 1rem; font-size: 1.5rem;">{{ formatDate(email.createdAt) }}</div>
 						<button *ngIf="!email.archived && !email.deleted" class="btn btn-warning"
 							(click)="archiveEmail(email._id, email.subject)">
 							<fa-icon [icon]="icons.faArchive"></fa-icon>
@@ -42,7 +42,7 @@
 					</div>
 				</li>
 			</ul>
-			<ul *ngIf="!displayEmails || !displayEmails[0]">Nothing to show</ul>
+			<ul *ngIf="!displayEmails || !displayEmails[0]">Nothing to show... <a style="font-size: 1.5rem;" [routerLink]="['/account']">Don't have any aliases?</a></ul>
 		</div>
 		<nav *ngIf="displayEmails" aria-label="Page navigation example">
 			<ul class="pagination nav-bottom-page">

@@ -40,6 +40,20 @@ export class AuthenticationService {
 			}));
 	}
 
+	refresh() {
+		if (!(this.currentUserValue as any) || !(this.currentUserValue as any).data || !(this.currentUserValue as any).data.user) { return; }
+		return this.http.get<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/${(this.currentUserValue as any).data.user._id}`)
+			.pipe(map(user => {
+				const newUser = user.data.doc;
+				const oldObjUser = JSON.parse(localStorage.getItem('currentUser'));
+				// store user details and jwt token in local storage to keep user logged in between page refreshes
+				oldObjUser.data.user = newUser;
+				localStorage.setItem('currentUser', JSON.stringify(oldObjUser));
+				this.currentUserSubject.next(oldObjUser);
+				return oldObjUser;
+			}));
+	}
+
 	signup(name: string, email: string, password: string, passwordConfirm: string) {
 		return this.http.post<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/signup`,
 			{ name, email, password, passwordConfirm })

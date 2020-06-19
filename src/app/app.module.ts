@@ -35,6 +35,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ComposeComponent } from './components/compose/compose.component';
 import { EmailComponent } from './components/email/email.component';
 import { AccountComponent } from './components/account/account.component';
+import { FormInfoUpdateComponent } from './components/form-info-update/form-info-update.component';
 
 @NgModule({
 	declarations: [
@@ -46,7 +47,8 @@ import { AccountComponent } from './components/account/account.component';
 		LoginComponent,
 		ComposeComponent,
 		EmailComponent,
-		AccountComponent
+		AccountComponent,
+		FormInfoUpdateComponent
 	],
 	imports: [
 		BrowserModule,

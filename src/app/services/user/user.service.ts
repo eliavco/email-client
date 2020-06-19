@@ -15,4 +15,9 @@ export class UserService {
 	getOne(id: string) {
 		return this.http.get<User[]>(`${environment.apiUrl}/api/v${environment.apiVersion}/users${id}`);
 	}
+
+	updateSelf(data) {
+		return this.http.patch<User[]>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/updateInfo`, data);
+	}
+
 }

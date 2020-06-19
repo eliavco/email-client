@@ -21,15 +21,6 @@ export class GlobalNavbarComponent implements OnInit {
 	accountActive = false;
 
 	constructor(private router: Router, private userService: UserService, private authenticationService: AuthenticationService) {
-		this.router.events.subscribe(val => {
-			if (val instanceof NavigationEnd) {
-				this.makeActive();
-				if (this.authenticationService.currentUserValue) {
-					this.login = true; this.refreshUser();
-				}
-				else { this.login = false; this.user = undefined; }
-			}
-		});
 	}
 
 	makeActive(): void {
@@ -41,6 +32,15 @@ export class GlobalNavbarComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.router.events.subscribe(val => {
+			if (val instanceof NavigationEnd) {
+				this.makeActive();
+				if (this.authenticationService.currentUserValue) {
+					this.login = true; this.refreshUser();
+				}
+				else { this.login = false; this.user = undefined; }
+			}
+		});
 	}
 
 	logout() {
