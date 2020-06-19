@@ -93,3 +93,18 @@ a {
 		transition: all 0.3s;
 	}
 }
+
+.nav-bottom-page {
+	display: flex;
+	width: 100%;
+	margin-bottom: 0;
+}
+
+.page-item {
+	width: 100%;
+	border-radius: 0;
+}
+
+.card {
+	margin-bottom: 3rem;
+}

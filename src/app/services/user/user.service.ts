@@ -11,4 +11,8 @@ export class UserService {
 	getAll() {
 		return this.http.get<User[]>(`${environment.apiUrl}/api/v${environment.apiVersion}/users`);
 	}
+
+	getOne(id: string) {
+		return this.http.get<User[]>(`${environment.apiUrl}/api/v${environment.apiVersion}/users${id}`);
+	}
 }

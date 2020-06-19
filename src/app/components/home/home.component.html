@@ -44,5 +44,12 @@
 			</ul>
 			<ul *ngIf="!displayEmails || !displayEmails[0]">Nothing to show</ul>
 		</div>
+		<nav *ngIf="displayEmails" aria-label="Page navigation example">
+			<ul class="pagination nav-bottom-page">
+				<li *ngIf="page > 1" class="page-item"><a class="page-link" [routerLink]="['/']" [queryParams]="{ page: ''+(+page-1) }">Previous ({{ +page - 1 }})</a></li>
+				<!-- <li class="page-item"><a class="page-link">{{ page }}</a></li> -->
+				<li class="page-item"><a class="page-link" [routerLink]="['/']" [queryParams]="{ page: ''+(+page+1) }">Next ({{ +page + 1 }})</a></li>
+			</ul>
+		</nav>
 	</div>
 </div>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 
 import { Email } from './../../interfaces/email';
@@ -14,8 +15,9 @@ import { faInbox, faBoxOpen, faTrash, faTrashRestore, faArchive } from '@fortawe
 	styleUrls: ['./home.component.scss'],
 	templateUrl: 'home.component.html'
 })
-export class HomeComponent implements OnInit {
-	loading = false;
+export class HomeComponent implements OnInit, OnChanges {
+	limit = 10;
+
 	emails: Email[];
 	displayEmails: Email[];
 	tabs = [
@@ -25,6 +27,7 @@ export class HomeComponent implements OnInit {
 	];
 	icons = { faTrash, faArchive, faTrashRestore, faBoxOpen };
 	tabActive = 'success';
+	page = 1;
 
 	sortEmails() {
 		this.emails.sort((a, b) => -(b.createdAt.getTime() - a.createdAt.getTime()));
@@ -47,41 +50,69 @@ export class HomeComponent implements OnInit {
 	}
 
 	filterInbox() {
-		this.setTabActive(0);
+		window.localStorage.active = 0;
 		this.tabActive = 'success';
-		this.displayEmails = this.emails.filter((email) => (!email.archived) && (!email.deleted));
+		this.refreshEmails((() => {
+			this.setTabActive(0);
+			if (+window.localStorage.active) { this.setTabActive(+window.localStorage.active); }
+			this.displayEmails = this.emails.filter((email) => (!email.archived) && (!email.deleted));
+		}).bind(this), false, false);
 	}
 
 	filterArchive() {
-		this.setTabActive(1);
+		window.localStorage.active = 1;
 		this.tabActive = 'primary';
-		this.displayEmails = this.emails.filter((email) => (email.archived) && (!email.deleted));
+		this.refreshEmails((() => {
+			this.setTabActive(1);
+			if (+window.localStorage.active) { this.setTabActive(+window.localStorage.active); }
+			this.displayEmails = this.emails.filter((email) => (email.archived) && (!email.deleted));
+		}).bind(this), false, true);
 	}
 
 	filterTrash() {
-		this.setTabActive(2);
+		window.localStorage.active = 2;
 		this.tabActive = 'danger';
-		this.displayEmails = this.emails.filter((email) => (email.deleted));
+		this.refreshEmails((() => {
+			this.setTabActive(2);
+			if (+window.localStorage.active) { this.setTabActive(+window.localStorage.active); }
+			this.displayEmails = this.emails.filter((email) => email.deleted);
+		}).bind(this), true);
 	}
 
 	constructor(
 		private emailsService: EmailsService,
 		private titleService: Title,
+		private router: Router,
+		private route: ActivatedRoute,
 		private authenticationService: AuthenticationService,
 		private alertsService: AlertsService,
 		private socket: Socket) { }
 
 	ngOnInit() {
-		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Inbox`);
-		this.refreshEmails();
-		this.socket.on('refresh_emails', () => { this.refreshEmails(); this.alertsService.addToast('You\'ve got Mail!'); });
+		this.route.queryParams
+			.subscribe(params => {
+				if (params.page > 0) {
+					this.page = params.page;
+				}
+				this.titleService.setTitle(`${(window as any).bkBaseTitle} | Inbox`);
+				+window.localStorage.active ? this.tabs[+window.localStorage.active].action() : this.filterInbox();
+				this.socket.on('refresh_emails', () => { this.filterInbox(); this.alertsService.addToast('You\'ve got Mail!'); });
+			});
 	}
 
-	refreshEmails() {
-		this.emailsService.getMyEmails(true).subscribe((emails) => {
+	ngOnChanges(): void {
+		if (+window.localStorage.active) { this.setTabActive(+window.localStorage.active); }
+	}
+
+	refreshEmails(cb?, deleted?: boolean, archived?: boolean) {
+		this.emailsService.getMyEmails(true, this.limit, this.page, deleted, archived).subscribe((emails) => {
 			this.emails = (emails as any).data.documents.map(this.parseEmail);
+			if (this.emails.length === 0 && this.page > 1) {
+				this.router.navigate(['/'], { queryParams: { page: this.page - 1 } });
+				this.alertsService.addToast('No More Mails for you over there!');
+			}
 			this.sortEmails();
-			this.filterInbox();
+			cb();
 		});
 	}
 
@@ -94,28 +125,24 @@ export class HomeComponent implements OnInit {
 
 	deleteEmail(id: string, subject: string) {
 		this.emailsService.deleteEmail(id).subscribe(() => {
-			this.refreshEmails();
 			this.alertsService.addToast(`'${subject}' deleted`);
 		});
 	}
 
 	archiveEmail(id: string, subject: string) {
 		this.emailsService.archiveEmail(id).subscribe(() => {
-			this.refreshEmails();
 			this.alertsService.addToast(`'${subject}' archived`);
 		});
 	}
 
 	unarchiveEmail(id: string, subject: string) {
 		this.emailsService.unarchiveEmail(id).subscribe(() => {
-			this.refreshEmails();
 			this.alertsService.addToast(`'${subject}' unarchived`);
 		});
 	}
 
 	restoreEmail(id: string, subject: string) {
 		this.emailsService.restoreEmail(id).subscribe(() => {
-			this.refreshEmails();
 			this.alertsService.addToast(`'${subject}' restored`);
 		});
 	}

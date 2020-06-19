@@ -34,6 +34,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ComposeComponent } from './components/compose/compose.component';
 import { EmailComponent } from './components/email/email.component';
+import { AccountComponent } from './components/account/account.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,8 @@ import { EmailComponent } from './components/email/email.component';
 		HomeComponent,
 		LoginComponent,
 		ComposeComponent,
-		EmailComponent
+		EmailComponent,
+		AccountComponent
 	],
 	imports: [
 		BrowserModule,

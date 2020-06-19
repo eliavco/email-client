@@ -4,7 +4,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<a class="navbar-brand" routerLink="/">
-		<img src="assets/logos/logo-semi.png" height="16" class="d-inline-block" alt="MichalsFirst Logo"
+		<img src="assets/logos/logo-semi.png" height="16" class="d-inline-block" alt="Email Logo"
 			loading="lazy">
 		Email
 	</a>
@@ -21,4 +21,12 @@
 			</li>
 		</ul>
 	</div>
+	
+	<ul class="navbar-nav mr-auto mt-2 mt-lg-0 bk-navbar-links">
+		<li *ngIf="user" class="nav-item" [class.active]="accountActive">
+			<a class="nav-link user-select-none" [routerLink]="['account']">
+				<img class="user-profile" src="{{ user.photo }}" alt="{{ user.name }}" loading="lazy"/>
+				{{ user.name }}</a>
+		</li>
+	</ul>
 </nav>
