@@ -1,1 +1,22 @@
-<p>update-alias works!</p>
+<form class="mt-5">
+
+	<div class="alert alert-success" role="alert">
+		<h4 class="alert-heading">Aliases</h4>
+		<p>are like nicknames which come before the email address (@mail.eliavco.com in our case) so we know we need to direct them to your inbox. For example, if you took the alias 'hello', now all emails sent to 'hello@mail.eliavco.com' will be redirected to your inbox</p>
+		<hr>
+		<p class="mb-0">You can have as many aliases as you want, as long as they do not belong to anybody already</p>
+	</div>
+	<div *ngFor="let alias of user.subscriptions" class="alert alert-primary" style="width:100%;">{{ alias }}@mail.eliavco.com</div>
+	<div class="form">
+		<!-- new alias -->
+		<section class="form-group">
+			<input type="text" class="form-control" id="alias" [(ngModel)]="alias" 
+				[ngModelOptions]="{standalone: true}"
+				placeholder="example">
+			<input class="form-control" type="text" placeholder="@mail.eliavco.com" readonly>
+		</section>
+	</div>
+
+	<div *ngIf="err" class="alert alert-danger" style="width:100%;">{{ err }}</div>
+	<button type="submit" class="btn btn-danger" (click)="onSubmit()">Add Alias</button>
+</form>

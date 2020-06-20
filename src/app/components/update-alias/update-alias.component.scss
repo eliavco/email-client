@@ -1,0 +1,51 @@
+@import "./../../../scss/abstract/variables";
+
+* {
+	font-size: 2rem;
+	line-height: 140%;
+}
+
+section {
+	width: 100%;
+	&:not(:first-child) {	
+		margin-left: 2rem;	
+		@media (max-width: map-get($grid-breakpoints, sm)) {
+			margin-top: 2rem;
+			margin-left: 0;
+		}
+	}
+}
+
+.form {
+	display: flex;
+	width: 100%;
+	@media (max-width: map-get($grid-breakpoints, sm)) {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	&-group {
+		display: flex;
+	}
+
+	&-control {
+		&:first-child {
+			text-align: right;
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+			border-right: 0;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
+
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
