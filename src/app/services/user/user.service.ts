@@ -20,4 +20,8 @@ export class UserService {
 		return this.http.patch<User[]>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/updateInfo`, data);
 	}
 
+	updatePassword(data) {
+		return this.http.patch<User[]>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/updatePassword`, data);
+	}
+
 }

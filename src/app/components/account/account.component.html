@@ -1,10 +1,11 @@
-<div class="col-md-10 offset-md-1 mt-5">
+<div class="col-md-10 offset-md-1 mt-5 mb-5">
 	<div class="card mt-4">
 		<h4 class="card-header">
 			Your Account Settings
 		</h4>
 		<div class="card-body">
-			<bk-form-info-update [user]="user" (refresh)="getUser()"></bk-form-info-update>
+			<bk-form-info-update [user]="user" (refresh)="getUser()"></bk-form-info-update><hr>
+			<bk-update-password [user]="user" (refresh)="getUser()"></bk-update-password>
 		</div>
 	</div>
 </div>

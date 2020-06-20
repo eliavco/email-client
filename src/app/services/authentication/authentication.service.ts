@@ -40,6 +40,11 @@ export class AuthenticationService {
 			}));
 	}
 
+	setNewObj(obj) {
+		localStorage.setItem('currentUser', JSON.stringify(obj));
+		this.currentUserSubject.next(obj);
+	}
+
 	refresh() {
 		if (!(this.currentUserValue as any) || !(this.currentUserValue as any).data || !(this.currentUserValue as any).data.user) { return; }
 		return this.http.get<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/${(this.currentUserValue as any).data.user._id}`)

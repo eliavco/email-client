@@ -36,6 +36,8 @@ import { ComposeComponent } from './components/compose/compose.component';
 import { EmailComponent } from './components/email/email.component';
 import { AccountComponent } from './components/account/account.component';
 import { FormInfoUpdateComponent } from './components/form-info-update/form-info-update.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { UpdateAliasComponent } from './components/update-alias/update-alias.component';
 
 @NgModule({
 	declarations: [
@@ -48,7 +50,9 @@ import { FormInfoUpdateComponent } from './components/form-info-update/form-info
 		ComposeComponent,
 		EmailComponent,
 		AccountComponent,
-		FormInfoUpdateComponent
+		FormInfoUpdateComponent,
+		UpdatePasswordComponent,
+		UpdateAliasComponent
 	],
 	imports: [
 		BrowserModule,
