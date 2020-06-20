@@ -36,6 +36,13 @@ export class FormInfoUpdateComponent implements OnInit {
 		this.form.get('photo').setValue(file);
 	}
 
+	removeProfile() {
+		this.userService.removeProfile().subscribe(() => {
+			localStorage.updated = true;
+			this.refresh.emit();
+		});
+	}
+
 	onSubmit() {
 		const formData = new FormData();
 		const formVals = this.form.value;

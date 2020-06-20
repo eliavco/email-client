@@ -6,7 +6,8 @@
 		<div class="card-body">
 			<bk-form-info-update [user]="user" (refresh)="getUser()"></bk-form-info-update><hr>
 			<bk-update-password [user]="user" (refresh)="getUser()"></bk-update-password><hr>
-			<bk-update-alias [user]="user" (refresh)="getUser()"></bk-update-alias>
+			<bk-update-alias [user]="user" (refresh)="getUser()"></bk-update-alias><hr>
+			<div class="alert alert-danger"><button type="button" class="btn btn-danger" style="width:100%;" (click)="deleteAccount()">Delete Account & Logout <br>(login again to restore your account)</button></div>
 		</div>
 	</div>
 </div>

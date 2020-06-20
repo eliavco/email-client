@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		<div class="card-body">
-			<div *ngIf="email">{{ email.subject }}</div>
+			<div *ngIf="email" [innerHtml]="email.html"></div>
 			<div *ngIf="!email">Nothing to show</div>
 		</div>
 	</div>

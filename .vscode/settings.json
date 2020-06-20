@@ -42,7 +42,6 @@
     "firebase-debug.log": true,
     "src\\app\\components\\alerts": true,
     "src\\app\\components\\not-found": true,
-    "src\\app\\components\\home": true,
     "src\\app\\components\\global-navbar": true
   }
 }

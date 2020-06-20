@@ -6,7 +6,7 @@
 		<hr>
 		<p class="mb-0">You can have as many aliases as you want, as long as they do not belong to anybody already</p>
 	</div>
-	<div *ngFor="let alias of user.subscriptions" class="alert alert-primary" style="width:100%;">{{ alias }}@mail.eliavco.com</div>
+	<div *ngFor="let alias of user.subscriptions" class="alert alert-primary" style="width:100%;">{{ alias }}@mail.eliavco.com<fa-icon [icon]="icons.faEraser" (click)="removeAlias(alias)" class="right"></fa-icon></div>
 	<div class="form">
 		<!-- new alias -->
 		<section class="form-group">
@@ -18,5 +18,5 @@
 	</div>
 
 	<div *ngIf="err" class="alert alert-danger" style="width:100%;">{{ err }}</div>
-	<button type="submit" class="btn btn-danger" (click)="onSubmit()">Add Alias</button>
+	<button type="submit" class="btn btn-dark" (click)="onSubmit()">Add Alias</button>
 </form>

@@ -24,8 +24,17 @@ export class UserService {
 		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/users/updatePassword`, data);
 	}
 
-	addSubscription(alias: string) {
-		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/users/sub?alias=${alias}`, null);
+	removeProfile() {
+		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/users/removeProfile`, null);
+	}
+
+	deleteSelf() {
+		return this.http.delete(`${environment.apiUrl}/api/v${environment.apiVersion}/users/deleteMe`);
+	}
+
+	addSubscription(alias: string, remove = false) {
+		return this.http.patch(
+			`${environment.apiUrl}/api/v${environment.apiVersion}/users/sub?alias=${alias}${remove ? '&act=remove' : ''}`, null);
 	}
 
 }

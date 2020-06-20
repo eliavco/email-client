@@ -96,7 +96,19 @@ export class HomeComponent implements OnInit, OnChanges {
 				}
 				this.titleService.setTitle(`${(window as any).bkBaseTitle} | Inbox`);
 				+window.localStorage.active ? this.tabs[+window.localStorage.active].action() : this.filterInbox();
-				this.socket.on('refresh_emails', () => { this.filterInbox(); this.alertsService.addToast('You\'ve got Mail!'); });
+				const toUser = (this.authenticationService.currentUserValue as any).data.user.subscriptions;
+				this.socket.on('refresh_emails', (change: [string]) => {
+					let refresh = false;
+					toUser.forEach(user => {
+						if (change.indexOf(user) > -1) {
+							refresh = true;
+						}
+					});
+					if (refresh) {
+						this.filterInbox();
+						this.alertsService.addToast('You\'ve got Mail!');
+					}
+				});
 			});
 	}
 

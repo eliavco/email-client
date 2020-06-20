@@ -7,7 +7,10 @@
 				<input class="form__upload" (change)="onFileSelect($event)"
 				type="file" accept="image/*" id="photo" name="photo">
 				<label class="btn-text" id="photo__label"
-				for="photo" [title]="selectorTitle.length > 0 ? selectorTitle : 'Choose new photo'">{{ selectorTitleMin.length > 0 ? selectorTitleMin : 'Choose new photo' }}</label></div>
+				for="photo" [title]="selectorTitle.length > 0 ? selectorTitle : 'Choose new photo'">{{ selectorTitleMin.length > 0 ? selectorTitleMin : 'Choose new photo' }}</label>
+				<label class="btn-text upload-alt mt-3" (click)="removeProfile()"
+				[title]="'Remove photo'">Remove Photo</label>
+			</div>
 
 	</section>
 

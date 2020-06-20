@@ -33,6 +33,26 @@ form {
 	}
 }
 
+@mixin button-shiny() {
+	color: var(--primary);
+	display: inline-block;
+	text-decoration: none;
+	border-bottom: 1px solid var(--primary);
+	padding: 3px;
+	-webkit-transition: all 0.2s;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+@mixin button-shiny-hover() {
+	background-color: var(--primary);
+	color: #fff;
+	-webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+	box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+	-webkit-transform: translateY(-2px);
+	transform: translateY(-2px);
+}
+
 .form {
 	&__photo-upload {
 		display: -webkit-box;
@@ -62,22 +82,17 @@ form {
 	}
 
 	&__upload + label {
-		color: var(--primary);
-		display: inline-block;
-		text-decoration: none;
-		border-bottom: 1px solid var(--primary);
-		padding: 3px;
-		-webkit-transition: all 0.2s;
-		transition: all 0.2s;
-		cursor: pointer;
+		@include button-shiny();
 	}
 
 	&__upload + label:hover {
-		background-color: var(--primary);
-		color: #fff;
-		-webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-		box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-		-webkit-transform: translateY(-2px);
-		transform: translateY(-2px);
+		@include button-shiny-hover();
+	}
+}
+
+.upload-alt {
+	@include button-shiny();
+	&:hover {
+		@include button-shiny-hover();
 	}
 }
