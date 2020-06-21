@@ -18,7 +18,7 @@ export class NotFoundComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.titleService.setTitle(`${(window as any).bkBaseTitle} | לא נמצא`);
+		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Not Found`);
 	}
 
 }

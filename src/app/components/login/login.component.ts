@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from './../../services/authentication/authentication.service';
+import { UserService } from './../../services/user/user.service';
 
 @Component({
 	selector: 'bk-login',
@@ -17,13 +18,15 @@ export class LoginComponent implements OnInit {
 	submitted = false;
 	returnUrl: string;
 	error = '';
+	dataForgot;
 	newUser = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private authenticationService: AuthenticationService
+		private authenticationService: AuthenticationService,
+		private userService: UserService,
 	) {
 		// redirect to home if already logged in
 		if (this.authenticationService.currentUserValue) {
@@ -51,6 +54,21 @@ export class LoginComponent implements OnInit {
 	// convenience getter for easy access to form fields
 	get f() { return this.loginForm.controls; }
 	get fn() { return this.loginFormNew.controls; }
+
+	onForgot() {
+		if (this.f.email.value) {
+			this.loading = true;
+			this.userService.forgotPassword(this.f.email.value).subscribe(data => {
+				this.dataForgot = (data as any).message;
+				this.loading = false;
+			}, err => {
+					this.error = err;
+					this.loading = false;
+			});
+		} else {
+			this.error = 'No email specified';
+		}
+	}
 
 	onSubmit() {
 		this.submitted = true;

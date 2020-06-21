@@ -108,3 +108,23 @@ a {
 .card {
 	margin-bottom: 3rem;
 }
+
+.fixed-bottom-right {
+	position: fixed;
+	bottom: 3rem;
+	right: 3rem;
+}
+
+.compose-button {
+	* {
+		font-size: 3rem;
+		color:#fff;
+	}
+	background-image: linear-gradient(62deg, #FBAB7E, #F7CE68);
+	background-repeat: no-repeat;
+	border-radius: 1.8rem;
+
+	@media (max-width: map-get($grid-breakpoints, md)) {
+		display: none;
+	}
+}

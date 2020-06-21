@@ -75,8 +75,12 @@
 						<!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
 						Login
 					</button>
+					<div *ngIf="dataForgot" class="alert alert-success mt-3 mb-0">{{dataForgot}}</div>
 					<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
 				</form>
+				<button [disabled]="loading" class="btn btn-warning mt-2" (click)="onForgot()">
+					Forgot password?
+				</button>
 			</div>
 		</div>
 	</ng-container>

@@ -8,7 +8,7 @@ import { EmailsService } from './../../services/emails/emails.service';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { AlertsService } from './../../services/alerts/alerts.service';
 
-import { faInbox, faBoxOpen, faTrash, faTrashRestore, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { faInbox, faBoxOpen, faTrash, faTrashRestore, faArchive, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'bk-home',
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, OnChanges {
 		{ title: 'Archive', action: this.filterArchive.bind(this), icon: faBoxOpen },
 		{ title: 'Trash', action: this.filterTrash.bind(this), icon: faTrash },
 	];
-	icons = { faTrash, faArchive, faTrashRestore, faBoxOpen };
+	icons = { faTrash, faArchive, faTrashRestore, faBoxOpen, faPlusCircle };
 	tabActive = 'success';
 	page = 1;
 

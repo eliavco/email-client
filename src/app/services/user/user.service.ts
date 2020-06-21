@@ -24,6 +24,14 @@ export class UserService {
 		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/users/updatePassword`, data);
 	}
 
+	forgotPassword(email: string) {
+		return this.http.post(`${environment.apiUrl}/api/v${environment.apiVersion}/users/forgotPassword`, { email, url: `${location.origin}/reset-password` });
+	}
+
+	resetPassword(token, data) {
+		return this.http.patch<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/resetPassword/${token}`, data);
+	}
+
 	removeProfile() {
 		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/users/removeProfile`, null);
 	}

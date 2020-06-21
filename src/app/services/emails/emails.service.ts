@@ -38,4 +38,8 @@ export class EmailsService {
 	makeReadEmail(id: string) {
 		return this.http.patch(`${environment.apiUrl}/api/v${environment.apiVersion}/emails/${id}`, { read: true });
 	}
+
+	sendEmail(data) {
+		return this.http.post(`${environment.apiUrl}/send`, data);
+	}
 }

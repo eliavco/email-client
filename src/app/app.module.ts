@@ -38,6 +38,7 @@ import { AccountComponent } from './components/account/account.component';
 import { FormInfoUpdateComponent } from './components/form-info-update/form-info-update.component';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { UpdateAliasComponent } from './components/update-alias/update-alias.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
 	declarations: [
@@ -52,7 +53,8 @@ import { UpdateAliasComponent } from './components/update-alias/update-alias.com
 		AccountComponent,
 		FormInfoUpdateComponent,
 		UpdatePasswordComponent,
-		UpdateAliasComponent
+		UpdateAliasComponent,
+		ResetPasswordComponent
 	],
 	imports: [
 		BrowserModule,

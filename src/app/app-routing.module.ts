@@ -7,6 +7,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmailComponent } from './components/email/email.component';
 import { AccountComponent } from './components/account/account.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthGuard } from './utils/auth.guard';
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
 	{ path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'email/:emailId', component: EmailComponent, canActivate: [AuthGuard] },
+	{ path: 'reset-password/:token', component: ResetPasswordComponent },
 	{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
 	{ path: '**', component: NotFoundComponent },
 ];
