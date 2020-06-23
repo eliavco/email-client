@@ -3,7 +3,7 @@ import { User } from './../../interfaces/user';
 import { UserService } from './../../services/user/user.service';
 import { AlertsService } from './../../services/alerts/alerts.service';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
-
+import { environment } from './../../../environments/environment';
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,6 +16,7 @@ export class UpdateAliasComponent implements OnInit {
 	alias = '';
 	@Output() refresh = new EventEmitter<void>();
 	err: string;
+	baseMail = environment.baseMail;
 	icons = { faEraser };
 
 	constructor(

@@ -21,7 +21,6 @@
     "package-lock.json": true,
     "src\\test.ts": true,
     "src\\polyfills.ts": true,
-    "src\\environments": true,
     "package.json": true,
     "README.md": true,
     "main.ts": true,
@@ -42,6 +41,7 @@
     "src\\app\\components\\alerts": true,
     "src\\app\\components\\global-navbar": true,
     "src\\app\\components\\not-found": true,
-    "src\\app\\utils": true
+    "src\\app\\utils": true,
+    "src\\environments": true
   }
 }

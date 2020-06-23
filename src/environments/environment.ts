@@ -5,7 +5,8 @@
 export const environment = {
 	production: false,
 	apiUrl: 'https://email-cohen.herokuapp.com',
-	apiVersion: 1
+	apiVersion: 1,
+	baseMail: 'mail.eliavco.com',
 };
 
 /*

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { UserService } from './../../services/user/user.service';
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
 		private router: Router,
 		private authenticationService: AuthenticationService,
 		private userService: UserService,
+		private titleService: Title
 	) {
 		// redirect to home if already logged in
 		if (this.authenticationService.currentUserValue) {
@@ -35,6 +37,8 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.titleService.setTitle(`${(window as any).bkBaseTitle} - Login`);
+
 		this.loginForm = this.formBuilder.group({
 			email: ['', Validators.required],
 			password: ['', Validators.required]

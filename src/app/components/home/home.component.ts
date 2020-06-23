@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit, OnChanges {
 				if (params.page > 0) {
 					this.page = params.page;
 				}
-				this.titleService.setTitle(`${(window as any).bkBaseTitle} | Inbox`);
+				this.titleService.setTitle(`${(window as any).bkBaseTitle} - Inbox`);
 				+window.localStorage.active ? this.tabs[+window.localStorage.active].action() : this.filterInbox();
 				const toUser = (this.authenticationService.currentUserValue as any).data.user.subscriptions;
 				this.socket.on('refresh_emails', (change: [string]) => {

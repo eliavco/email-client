@@ -28,7 +28,7 @@ export class EmailComponent implements OnInit {
 	refreshEmail(): void {
 		this.emailsService.getEmail(this.id).subscribe(email => {
 			this.email = this.parseEmail((email as any).data.doc);
-			this.titleService.setTitle(`${(window as any).bkBaseTitle} | ${this.email.subject}`);
+			this.titleService.setTitle(`${(window as any).bkBaseTitle} - ${this.email.subject}`);
 			if (!this.email.read) { this.emailsService.makeReadEmail(this.id).subscribe(); }
 		});
 	}

@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
 		private authenticationService: AuthenticationService) { }
 
 	ngOnInit(): void {
-		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Account`);
+		this.titleService.setTitle(`${(window as any).bkBaseTitle} - Account`);
 	}
 
 	getUser() {
