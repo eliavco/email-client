@@ -22,7 +22,7 @@ body {
 	font-size: 2rem;
 }
 
-* {
+*:not(.editor *) {
 	overflow-x: hidden;
 }
 
@@ -45,4 +45,8 @@ body {
 	-ms-user-select: all;
 	-o-user-select: all;
 	user-select: all;  
+}
+
+.ql-toolbar * {
+	z-index: 9999;
 }

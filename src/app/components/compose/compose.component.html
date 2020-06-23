@@ -30,7 +30,30 @@
 					</div>
 				</ng-container>
 			</form><hr class="mt-3">
-			<div id="editor"><div id="toolbar"></div></div>
+			<div class="editor"><div id="editor"></div></div><small class="form-text text-muted">To embed photos, upload the file, click on the embed button, and paste the code in the mail body where you want to embed the picture. Avoid formatting this code.</small><hr>
+			<section>
+				<h3 class="mb-3">Files</h3>
+				<div *ngFor="let file of files" class="alert alert-secondary file-entry user-select-none">
+					<div class="left filename">
+						{{ file.name }}
+					</div>
+					<div class="right">
+						<button *ngIf="file.image && !file.calendar" (click)="getEmbedCode(file.ref)" class="btn btn-dark mr-2">Embed</button>
+						<button *ngIf="file.calendar" class="btn btn-primary mr-2" disabled style="cursor:default;"><fa-icon [icon]="icons.faCalendarAlt"></fa-icon></button>
+						<button (click)="removeFile(file)" class="btn btn-danger"><fa-icon [icon]="icons.faWindowClose"></fa-icon></button>
+					</div>
+				</div>
+				<div class="custom-file" style="overflow: hidden;">
+					<input type="file" (change)="onFileSelect($event)" class="custom-file-input" id="file-attachments-selector">
+					<label class="custom-file-label" for="file-attachments-selector">Choose file</label>
+				</div>
+				<div class="form-check" *ngIf="!calendarExists">
+					<input class="form-check-input" type="checkbox" [(ngModel)]="calendar" id="calendar-check">
+					<label class="form-check-label user-select-none" for="calendar-check">
+						&nbsp;&nbsp;Add as a calendar file <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
+					</label>
+				</div>
+			</section><hr>
 			<button type="button" class="btn btn-primary mt-3" [disabled]="form.status !== 'VALID'" (click)="onSubmit()">Send <fa-icon [icon]="icons.faPaperPlane"></fa-icon></button>
 			<div *ngIf="form.status !== 'VALID'" class="alert alert-warning mt-4">Some fields are still invalid or missing</div>
 			<div *ngIf="error" class="alert alert-danger mt-4">{{ error }}</div>

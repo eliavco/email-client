@@ -5,8 +5,54 @@ import { AlertsService } from './../../services/alerts/alerts.service';
 import { EmailsService } from './../../services/emails/emails.service';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { environment } from './../../../environments/environment';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faWindowClose, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 const Quill = require('quill');
+const shortid = require('shortid');
+
+const styles = `
+	@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+	.message {
+		font-family: 'Lato', sans-serif;
+	}
+	blockquote {
+		background: #f9f9f9;
+		border-left: 10px solid #ccc;
+		margin: 1.5em 10px;
+		padding: 0.5em 10px;
+		quotes: "\\201C""\\201D""\\2018""\\2019";
+	}
+	blockquote:before {
+		color: #ccc;
+		content: open-quote;
+		font-size: 4em;
+		line-height: 0.1em;
+		margin-right: 0.25em;
+		vertical-align: -0.4em;
+	}
+	blockquote p {
+		display: inline;
+	}
+`;
+
+const toolbarOptions = [
+	['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+	['blockquote', 'link'],
+
+	[{ header: 1 }, { header: 2 }],               // custom button values
+	[{ list: 'ordered' }, { list: 'bullet' }],
+	[{ script: 'sub' }, { script: 'super' }],      // superscript/subscript
+	[{ indent: '-1' }, { indent: '+1' }],          // outdent/indent
+	[{ direction: 'rtl' }],                         // text direction
+
+	// [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+	[{ color: [] }, { background: [] }],          // dropdown with defaults from theme
+	[{ font: [] }],
+	[{ align: [] }],
+
+	['clean']                                         // remove formatting button
+];
 
 @Component({
 	selector: 'bk-compose',
@@ -23,10 +69,13 @@ export class ComposeComponent implements OnInit {
 		cc: new FormControl(''),
 		bcc: new FormControl(''),
 		headers: new FormControl(''),
+		guide: new FormControl(''),
 	});
 	error = '';
 	icons = {
 		faPaperPlane,
+		faWindowClose,
+		faCalendarAlt
 	};
 	manualHeaders = false;
 	fields = [
@@ -45,6 +94,18 @@ export class ComposeComponent implements OnInit {
 	];
 	editor;
 	associatedEmails;
+	files: [{
+		file: File,
+		field: string,
+		name: string,
+		calendar: boolean,
+		id: number,
+		image: string,
+		ref: string
+	}?] = [];
+	calendar = false;
+	calendarExists = false;
+	ref = '';
 
 	constructor(
 		private titleService: Title,
@@ -63,14 +124,22 @@ export class ComposeComponent implements OnInit {
 		this.associatedEmails = (this.authenticationService.currentUserValue as any).data.user.subscriptions.map(subscription => `${subscription}@${environment.baseMail}`);
 	}
 
+	registerStyle(path) {
+		const style = Quill.import(path);
+		Quill.register(style, true);
+	}
+
 	editorInit() {
-		const ColorClass = Quill.import('attributors/class/color');
-		const SizeStyle = Quill.import('attributors/style/size');
-		Quill.register(ColorClass, true);
-		Quill.register(SizeStyle, true);
+		this.registerStyle('attributors/style/align');
+		this.registerStyle('attributors/style/background');
+		this.registerStyle('attributors/style/color');
+		this.registerStyle('attributors/style/direction');
+		this.registerStyle('attributors/style/font');
+		this.registerStyle('attributors/style/size');
+
 		this.editor = new Quill('#editor', {
 			modules: {
-				toolbar: ['bold', 'italic', 'underline', 'strike', ]
+				toolbar: toolbarOptions
 			},
 			placeholder: 'Compose your e-mail...',
 			theme: 'snow',
@@ -87,6 +156,47 @@ export class ComposeComponent implements OnInit {
 		});
 	}
 
+	getBiggestAttach() {
+		let id = 0;
+		this.files.forEach((file) => {
+			if (file.id >= id) { id = file.id + 1; }
+		});
+		return id;
+	}
+
+	onFileSelect(event) {
+		const file = event.target.files[0];
+		this.files.push({
+			file,
+			name: file.name,
+			image: file.type.startsWith('image/'),
+			id: this.getBiggestAttach(),
+			field: `attachment-${this.getBiggestAttach()}`,
+			calendar: this.calendar,
+			ref: shortid.generate()
+		});
+		if (this.calendar) { this.calendarExists = true; this.calendar = false; }
+	}
+
+	getEmbedCode(fileRef: string) {
+		const el = document.createElement('textarea');
+		el.value = `<img src="cid:${fileRef}"/>`;
+		el.setAttribute('readonly', '');
+		el.style.position = 'absolute';
+		el.style.left = '-9999px';
+		document.body.appendChild(el);
+		el.select();
+		document.execCommand('copy');
+		document.body.removeChild(el);
+		this.alertsService.addToast('Image code copied!');
+	}
+
+	removeFile(file) {
+		const ind = this.files.indexOf(file);
+		if (file.calendar) { this.calendarExists = false; this.calendar = false; }
+		this.files.splice(ind, 1);
+	}
+
 	parseHeaders(headers) {
 		const newHeaders = {};
 		headers.split('\n').forEach(header => {
@@ -96,14 +206,39 @@ export class ComposeComponent implements OnInit {
 		return JSON.stringify(newHeaders);
 	}
 
+	setGuide() {
+		const guide = [];
+		this.files.forEach(file => {
+			guide.push({
+				field: file.field,
+				ref: file.ref,
+				calendar: file.calendar,
+			});
+		});
+		return JSON.stringify(guide);
+	}
+
+	formatHtml(html: string) {
+		return `<div><style>${styles}</style><div class="message">${html}</div></div>`;
+	}
+
 	onSubmit() {
-		this.form.get('html').setValue(this.editor.root.innerHTML);
+		const html = this.editor.root.innerHTML
+			.replace(new RegExp('&lt;img', 'g'), '<img')
+			.replace(new RegExp('&gt;', 'g'), '>');
+		const formattedHtml = this.formatHtml(html);
+		this.form.get('html').setValue(formattedHtml);
 		this.form.get('headers').setValue(this.parseHeaders(this.form.value.headers));
+		this.form.get('guide').setValue(this.setGuide());
 		const formData = new FormData();
 		const formVals = this.form.value;
+		this.files.forEach(fileData => {
+			formData.append(fileData.field, fileData.file);
+		});
 		Object.keys(formVals).forEach(key => {
 			if (formVals[key]) { formData.append(key, formVals[key]); }
 		});
+
 		this.emailsService.sendEmail(formData).subscribe(() => {
 			localStorage.sent = formVals.subject;
 			localStorage.name = formVals.name;
