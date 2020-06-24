@@ -1,7 +1,7 @@
 <div class="col-md-10 offset-md-1 mt-5 mb-5">
 	<div class="card mt-4">
 		<div class="card-header">
-			<div *ngIf="ok === true || ok === null">
+			<ng-container *ngIf="ok === true || ok === null">
 				<div class="left">
 					<a [routerLink]="['/']" [queryParams]="{ page: fromPage }" style="color: var(--gray);">
 						<fa-icon [icon]="icons.faBackward"></fa-icon> Back
@@ -15,7 +15,7 @@
 						<fa-icon *ngIf="email.deleted" [icon]="icons.faTrash" style="color:var(--gray);"></fa-icon>
 					</ng-container>
 				</div>
-			</div>
+			</ng-container>
 			<div *ngIf="ok === false">
 				403
 			</div>
