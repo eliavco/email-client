@@ -50,3 +50,11 @@ body {
 .ql-toolbar * {
 	z-index: 9999;
 }
+
+.wrapper {
+	z-index: 9999;
+	margin-bottom: 2rem;
+	* {
+		overflow: hidden;
+	}
+}

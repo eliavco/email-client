@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AlertsService } from './../../services/alerts/alerts.service';
 import { EmailsService } from './../../services/emails/emails.service';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { environment } from './../../../environments/environment';
-import { faPaperPlane, faWindowClose, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-const Quill = require('quill');
+import { faPaperPlane, faWindowClose, faCalendarAlt, faSmileWink } from '@fortawesome/free-solid-svg-icons';
+import Quill from 'quill';
+
+import * as EmojiButton from '@joeattardi/emoji-button';
+// import 'quill-emoji';
+
 const shortid = require('shortid');
 
 const styles = `
@@ -34,25 +39,29 @@ const styles = `
 	}
 `;
 
-const toolbarOptions = [
-	['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-	['blockquote', 'link'],
+const toolbarOptions = {
+	container: [
+		['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+		['blockquote', 'link'],
 
-	[{ header: 1 }, { header: 2 }],               // custom button values
-	[{ list: 'ordered' }, { list: 'bullet' }],
-	[{ script: 'sub' }, { script: 'super' }],      // superscript/subscript
-	[{ indent: '-1' }, { indent: '+1' }],          // outdent/indent
-	[{ direction: 'rtl' }],                         // text direction
+		[{ header: 1 }, { header: 2 }],               // custom button values
+		[{ list: 'ordered' }, { list: 'bullet' }],
+		[{ script: 'sub' }, { script: 'super' }],      // superscript/subscript
+		[{ indent: '-1' }, { indent: '+1' }],          // outdent/indent
+		[{ direction: 'rtl' }],                         // text direction
 
-	// [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
-	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+		// [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
+		[{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-	[{ color: [] }, { background: [] }],          // dropdown with defaults from theme
-	[{ font: [] }],
-	[{ align: [] }],
+		[{ color: [] }, { background: [] }],          // dropdown with defaults from theme
+		[{ font: [] }],
+		[{ align: [] }],
+		// ['emoji'],
 
-	['clean']                                         // remove formatting button
-];
+		['clean']                                         // remove formatting button
+	],
+	// handlers: { emoji() { }}
+};
 
 @Component({
 	selector: 'bk-compose',
@@ -75,6 +84,7 @@ export class ComposeComponent implements OnInit {
 	icons = {
 		faPaperPlane,
 		faWindowClose,
+		faSmileWink,
 		faCalendarAlt
 	};
 	manualHeaders = false;
@@ -111,6 +121,7 @@ export class ComposeComponent implements OnInit {
 		private titleService: Title,
 		private alertsService: AlertsService,
 		private authenticationService: AuthenticationService,
+		private route: ActivatedRoute,
 		private emailsService: EmailsService) {
 		if (localStorage.sent) {
 			this.alertsService.addToast(`Email ${localStorage.sent} sent!`);
@@ -121,7 +132,26 @@ export class ComposeComponent implements OnInit {
 	ngOnInit(): void {
 		this.titleService.setTitle(`${(window as any).bkBaseTitle} - Compose`);
 		this.editorInit();
+		this.emojiInit();
 		this.associatedEmails = (this.authenticationService.currentUserValue as any).data.user.subscriptions.map(subscription => `${subscription}@${environment.baseMail}`);
+		this.route.queryParams
+			.subscribe(qparams => {
+				if (qparams.to) {
+					this.form.get('to').setValue(qparams.to);
+				}
+			});
+	}
+
+	emojiInit() {
+		const container = document.querySelector('.ql-toolbar'); const button = document.createElement('div');
+		button.innerHTML = '☻'; button.style.display = 'inline-block'; button.id = 'emoji-button'; button.style.fontSize = '3.5rem';
+		const spanFormat = document.createElement('span'); spanFormat.classList.add('ql-formats');
+		spanFormat.insertAdjacentElement('beforeend', button); container.insertAdjacentElement('beforeend', spanFormat);
+		const picker = new EmojiButton();
+
+		picker.on('emoji', emoji => { this.editor.insertText(this.editor.getLength() - 1, emoji); });
+
+		button.addEventListener('click', () => { picker.togglePicker(button as HTMLElement); });
 	}
 
 	registerStyle(path) {
@@ -139,7 +169,10 @@ export class ComposeComponent implements OnInit {
 
 		this.editor = new Quill('#editor', {
 			modules: {
-				toolbar: toolbarOptions
+				toolbar: toolbarOptions,
+				// 'emoji-toolbar': true,
+				// 'emoji-textarea': true,
+				// 'emoji-shortname': true,
 			},
 			placeholder: 'Compose your e-mail...',
 			theme: 'snow',

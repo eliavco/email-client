@@ -39,6 +39,7 @@ import { FormInfoUpdateComponent } from './components/form-info-update/form-info
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { UpdateAliasComponent } from './components/update-alias/update-alias.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { SafeHtmlPipe } from './pipes/safe-html/safe-html.pipe';
 
 @NgModule({
 	declarations: [
@@ -54,7 +55,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 		FormInfoUpdateComponent,
 		UpdatePasswordComponent,
 		UpdateAliasComponent,
-		ResetPasswordComponent
+		ResetPasswordComponent,
+		SafeHtmlPipe
 	],
 	imports: [
 		BrowserModule,

@@ -164,6 +164,7 @@ export class HomeComponent implements OnInit, OnChanges {
 	}
 
 	shorten(text: string, trim: number): string {
+		if (text.length === 0) { return '[NO SUBJECT]'; }
 		return text.length > trim ? `${text.substring(0, trim).trim()}...` : text;
 	}
 

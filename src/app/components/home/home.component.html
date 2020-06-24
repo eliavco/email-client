@@ -14,10 +14,12 @@
 				<li *ngFor="let email of displayEmails" class="email-title">
 					<div class="left">
 						<ng-container *ngIf="email.read">
-							<a [routerLink]="['/email', email._id]">{{ shorten(email.subject, 15) }}<span style="color: var(--gray); font-size: 1.5rem;"> {{ email.envelope.from }}</span></a>
+							<a [routerLink]="['/email', email._id]" [queryParams]="{ fromPage: page }">{{ shorten(email.subject, 15) }}
+								<span style="color: var(--gray); font-size: 1.5rem;"> {{ email.envelope.from.indexOf('=')>=0 ? 'sent' : email.envelope.from }}</span></a>
 						</ng-container>
 						<ng-container *ngIf="!email.read">
-							<strong><a [routerLink]="['/email', email._id]">{{ shorten(email.subject, 15) }}<span style="color: var(--gray); font-size: 1.5rem;"> {{ email.envelope.from }}</span></a></strong>
+							<strong><a [routerLink]="['/email', email._id]" [queryParams]="{ fromPage: page }">{{ shorten(email.subject, 15) }}
+								<span style="color: var(--gray); font-size: 1.5rem;"> {{ email.envelope.from.indexOf('=')>=0 ? 'sent': email.envelope.from }}</span></a></strong>
 						</ng-container>
 					</div>
 					<div class="right">
@@ -42,7 +44,7 @@
 					</div>
 				</li>
 			</ul>
-			<ul *ngIf="!displayEmails || !displayEmails[0]">Nothing to show... <a style="font-size: 1.5rem;" [routerLink]="['/account']">Don't have any aliases?</a></ul>
+			<ul *ngIf="!displayEmails || !displayEmails[0]">Loading your e-mails... <a style="font-size: 1.5rem;" [routerLink]="['/account']">Don't have any aliases?</a></ul>
 		</div>
 		<nav *ngIf="displayEmails" aria-label="Page navigation example">
 			<ul class="pagination nav-bottom-page">

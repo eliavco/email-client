@@ -1,23 +1,56 @@
-<div class="col-md-10 offset-md-1 mt-5">
+<div class="col-md-10 offset-md-1 mt-5 mb-5">
 	<div class="card mt-4">
 		<div class="card-header">
-			<div class="left">
-				<a [routerLink]="['/']" style="color: var(--gray);">
-					<fa-icon [icon]="icons.faBackward"></fa-icon> Back
-				</a>
-				<h4 style="display: inline;">{{ email ? email.subject: 'Email' }}</h4>
+			<div *ngIf="ok === true || ok === null">
+				<div class="left">
+					<a [routerLink]="['/']" [queryParams]="{ page: fromPage }" style="color: var(--gray);">
+						<fa-icon [icon]="icons.faBackward"></fa-icon> Back
+					</a>
+					<h4 style="display: inline;">{{ email ? email.subject: 'Email' }}</h4>
+				</div>
+				<div class="right">
+					<ng-container *ngIf="email">
+						<span style="color:var(--gray);">Sent at: {{ formatDate(email.createdAt) }}&nbsp;</span>
+						<fa-icon *ngIf="email.archived" [icon]="icons.faArchive" style="color:var(--gray);"></fa-icon>&nbsp;
+						<fa-icon *ngIf="email.deleted" [icon]="icons.faTrash" style="color:var(--gray);"></fa-icon>
+					</ng-container>
+				</div>
 			</div>
-			<div class="right">
-				<ng-container *ngIf="email">
-					<span style="color:var(--gray);">Sent at: {{ formatDate(email.createdAt) }}&nbsp;</span>
-					<fa-icon *ngIf="email.archived" [icon]="icons.faArchive" style="color:var(--gray);"></fa-icon>&nbsp;
-					<fa-icon *ngIf="email.deleted" [icon]="icons.faTrash" style="color:var(--gray);"></fa-icon>
-				</ng-container>
+			<div *ngIf="ok === false">
+				403
 			</div>
 		</div>
 		<div class="card-body">
-			<div *ngIf="email" [innerHtml]="email.html"></div>
-			<div *ngIf="!email">Nothing to show</div>
+			<div *ngIf="ok === true || ok === null">
+				<div *ngIf="email">
+					<ul class="list-group mb-5">
+						<li class="list-group-item"><strong>From:</strong> {{ email.from }} 
+							<a *ngIf="!(email.envelope.from.indexOf('=') >= 0)" [routerLink]="['/compose']" [queryParams]="{ to: email.envelope.from }">Reply</a>
+						</li>
+						<li class="list-group-item"><strong>To:</strong> {{ email.envelope.to.join(', ') }}</li>
+						<li class="list-group-item">
+							<button style="padding:0;" class="btn" type="button" data-toggle="collapse" data-target="#headers" aria-expanded="false" aria-controls="collapseExample">
+								<fa-icon [icon]="icons.faCaretRight"></fa-icon><strong> Email Headers:</strong>
+							</button>
+						</li>
+						<li class="list-group-item collapse" id="headers">
+							<p *ngFor="let header of email.headers">{{ header }}</p>
+						</li>
+					</ul>
+					<div><strong>Message Body:</strong></div>
+					<ul class="list-group">
+						<div class="list-group-item" *ngIf="email.html" [innerHtml]="email.html | safeHtml"></div>
+					</ul>
+					<ul *ngIf="email.files.length > 0" class="list-group mt-5">
+						<li class="list-group-item"><strong>Attached Files:</strong></li>
+						<li *ngFor="let file of email.files" class="list-group-item">&nbsp;&nbsp;&nbsp;
+							<a href="{{ file.publicUrl }}" target="_blank" download>{{ file.originalname }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div *ngIf="ok === false">You Don't have access to this e-mail</div>
+			<div *ngIf="!email">Loading your e-mail...</div>
 		</div>
 	</div>
 </div>

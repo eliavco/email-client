@@ -1,33 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { faBackward, faTrash, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faTrash, faArchive, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 import { Email } from './../../interfaces/email';
 import { EmailsService } from './../../services/emails/emails.service';
+import { AuthenticationService } from './../../services/authentication/authentication.service';
 
 @Component({
 	selector: 'bk-email',
 	templateUrl: './email.component.html',
-	styleUrls: ['./email.component.scss']
+	styleUrls: ['./email.component.scss'],
+	// encapsulation: ViewEncapsulation.None,
 })
 export class EmailComponent implements OnInit {
 	id: string;
 	email: Email;
-	icons = { faBackward, faTrash, faArchive};
+	icons = { faBackward, faTrash, faArchive, faCaretRight };
+	fromPage = 1;
+	ok: boolean;
 
-	constructor(private route: ActivatedRoute, private emailsService: EmailsService, private titleService: Title) { }
+	constructor(
+		private route: ActivatedRoute,
+		private emailsService: EmailsService,
+		private authenticationService: AuthenticationService,
+		private titleService: Title) { }
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(params => {
 			this.id = params.get('emailId');
 			this.refreshEmail();
-		});
-	}
+			this.route.queryParams
+				.subscribe(qparams => {
+					if (qparams.fromPage > 0) {
+						this.fromPage = qparams.fromPage;
+					}
+				});
+			});
+		}
 
 	refreshEmail(): void {
 		this.emailsService.getEmail(this.id).subscribe(email => {
-			this.email = this.parseEmail((email as any).data.doc);
+			const subscriptions = (this.authenticationService.currentUserValue as any).data.user.subscriptions;
+			const parsedEmail = this.parseEmail((email as any).data.doc);
+			subscriptions.forEach(user => {
+				if (parsedEmail.toUser.indexOf(user) > -1) {
+					this.ok = true;
+				}
+			});
+			if (!this.ok) { this.ok = false; }
+			this.email = parsedEmail;
 			this.titleService.setTitle(`${(window as any).bkBaseTitle} - ${this.email.subject}`);
 			if (!this.email.read) { this.emailsService.makeReadEmail(this.id).subscribe(); }
 		});
