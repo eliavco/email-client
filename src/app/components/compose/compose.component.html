@@ -21,10 +21,10 @@
 					<div class="form-group" *ngIf="!(field.upon === 'manualHeaders' && !manualHeaders)">
 						<label [for]="field.id">{{ field.title }}{{ field.required ? '*' : '' }}</label>
 						<ng-container *ngIf="field.multi">
-							<textarea class="form-control" [formControlName]="field.control" [id]="field.id"></textarea>
+							<textarea class="form-control" [placeholder]="field.placeholder" [formControlName]="field.control" [id]="field.id"></textarea>
 						</ng-container>
 						<ng-container *ngIf="!field.multi">
-							<input [type]="field.type" [formControlName]="field.control" class="form-control" [id]="field.id">
+							<input [type]="field.type" [placeholder]="field.placeholder" [formControlName]="field.control" class="form-control" [id]="field.id">
 						</ng-container>
 						<small *ngIf="field.comment" class="form-text text-muted" [innerHtml]="field.comment"></small>
 					</div>

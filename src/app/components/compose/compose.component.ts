@@ -92,14 +92,16 @@ export class ComposeComponent implements OnInit {
 		{
 			title: 'To Address',
 			comment: 'separate addresses with a comma', id: 'compose-to', type: 'text', multi: false, control: 'to', display: true, required: true,
+			placeholder: 'someone1@example.com,someone2@example.com,someone3@example.com'
 		},
-		{ title: 'Full Name', id: 'compose-name', type: 'text', multi: false, control: 'name', display: true, required: true, },
-		{ title: 'Subject', id: 'compose-subject', type: 'text', multi: false, control: 'subject', display: true, required: true, },
-		{ title: 'Copies (cc)', id: 'compose-cc', type: 'text', multi: false, control: 'cc', display: true, },
-		{ title: 'Blind Copies (bcc)', id: 'compose-bcc', type: 'text', multi: false, control: 'bcc', display: true, },
+		{ title: 'Full Name', id: 'compose-name', type: 'text', multi: false, control: 'name', display: true, required: true, placeholder: 'Your Name' },
+		{ title: 'Subject', id: 'compose-subject', type: 'text', multi: false, control: 'subject', display: true, required: true, placeholder: 'Important Notice' },
+		{ title: 'Copies (cc)', id: 'compose-cc', type: 'text', multi: false, control: 'cc', display: true, placeholder: 'someone4@example.com,someone5@example.com' },
+		{ title: 'Blind Copies (bcc)', id: 'compose-bcc', type: 'text', multi: false, control: 'bcc', display: true, placeholder: 'someone6@example.com,someone7@example.com' },
 		{
-			title: 'Headers', comment: 'Your-Custom-Key: Your Value<br/>Another-Custom-Key: Another Value',
-			id: 'compose-headers', type: 'text', multi: true, control: 'headers', display: true, upon: 'manualHeaders'
+			title: 'Headers',
+			// comment: 'Your-Custom-Key: Your Value<br/>Another-Custom-Key: Another Value',
+			id: 'compose-headers', type: 'text', multi: true, control: 'headers', display: true, upon: 'manualHeaders', placeholder: 'Your-Custom-Key: Your Value\nAnother-Custom-Key: Another Value'
 		},
 	];
 	editor;
@@ -145,7 +147,8 @@ export class ComposeComponent implements OnInit {
 	emojiInit() {
 		const container = document.querySelector('.ql-toolbar'); const button = document.createElement('div');
 		button.innerHTML = '☻'; button.style.display = 'inline-block'; button.id = 'emoji-button'; button.style.fontSize = '3.5rem';
-		const spanFormat = document.createElement('span'); spanFormat.classList.add('ql-formats');
+		button.style.color = 'rgb(70, 70, 70)';
+		const spanFormat = document.createElement('span'); spanFormat.classList.add('ql-formats'); spanFormat.style.cursor = 'pointer';
 		spanFormat.insertAdjacentElement('beforeend', button); container.insertAdjacentElement('beforeend', spanFormat);
 		const picker = new EmojiButton();
 

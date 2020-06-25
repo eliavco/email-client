@@ -58,3 +58,9 @@ body {
 		overflow: hidden;
 	}
 }
+
+#emoji-button:hover,
+#emoji-button:active {
+	color: #06c !important;
+	transition: all .3s;
+}
