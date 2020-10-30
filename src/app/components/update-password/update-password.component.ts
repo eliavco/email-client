@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from './../../interfaces/user';
 import { UserService } from './../../services/user/user.service';
@@ -17,7 +17,6 @@ export class UpdatePasswordComponent implements OnInit {
 		newPassword: new FormControl(''),
 		newPasswordConfirm: new FormControl(''),
 	});
-	@Output() refresh = new EventEmitter<void>();
 	err: string;
 
 	constructor(
@@ -36,7 +35,7 @@ export class UpdatePasswordComponent implements OnInit {
 			newPasswordConfirm: this.form.value.newPasswordConfirm,
 		};
 		this.userService.updatePassword(data).subscribe(res => {
-			this.authenticationService.setNewObj(res);
+			this.authenticationService.logout();
 		}, err => {
 			this.err = err;
 		});

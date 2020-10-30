@@ -16,12 +16,17 @@ export class GlobalNavbarComponent implements OnInit {
 		{ title: 'Inbox', link: '/' },
 		{ title: 'Compose', link: '/compose' },
 	];
-	login = false;
+	get login(): boolean {
+		return (!!this.user);
+	}
 	user: User;
 	accountActive = false;
 
-	constructor(private router: Router, private userService: UserService, private authenticationService: AuthenticationService) {
-	}
+	constructor(
+		private router: Router,
+		private userService: UserService,
+		private authenticationService: AuthenticationService
+	) {}
 
 	makeActive(): void {
 		const path = window.location.pathname;
@@ -35,24 +40,15 @@ export class GlobalNavbarComponent implements OnInit {
 		this.router.events.subscribe(val => {
 			if (val instanceof NavigationEnd) {
 				this.makeActive();
-				if (this.authenticationService.currentUserValue) {
-					this.login = true; this.refreshUser();
-				}
-				else { this.login = false; this.user = undefined; }
 			}
+		});
+		this.authenticationService.currentUser.subscribe(data => {
+			this.user = (data as any);
 		});
 	}
 
 	logout() {
 		this.authenticationService.logout();
-		this.router.navigate(['/login']);
-	}
-
-	refreshUser() {
-		if ((this.authenticationService.currentUserValue as any).data.user) {
-			this.user = (this.authenticationService.currentUserValue as any).data.user;
-			this.user.photo = this.user.photo === 'default' ? `${environment.apiUrl}/img/users/default.jpg` : this.user.photo;
-		}
 	}
 
 }

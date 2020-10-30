@@ -27,7 +27,6 @@
     ".gitignore": true,
     "dist": true,
     "src\\app\\app.component.spec.ts": true,
-    "angular.json": true,
     "src\\assets": true,
     "src\\scss": true,
     "src\\favicon.ico": true,
@@ -42,6 +41,8 @@
     "src\\app\\components\\not-found": true,
     "src\\app\\utils": true,
     "src\\environments": true,
-    "src\\app\\pipes": true
+    "src\\app\\pipes": true,
+    "yarn.lock": true,
+    "angular.json": true
   }
 }

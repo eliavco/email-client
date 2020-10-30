@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { environment } from './../../../environments/environment';
 import { User } from './../../models/user';
@@ -13,7 +14,11 @@ export class AuthenticationService {
 	private currentUserSubject: BehaviorSubject<User>;
 	public currentUser: Observable<User>;
 
-	constructor(private http: HttpClient, private userService: UserService) {
+	constructor(
+		private http: HttpClient,
+		private router: Router,
+		private userService: UserService
+	) {
 		this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
 		this.currentUser = this.currentUserSubject.asObservable();
 	}
@@ -34,41 +39,47 @@ export class AuthenticationService {
 
 	login(email: string, password: string) {
 		return this.http.post<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/login`, { email, password })
-			.pipe(map(user => {
-				// store user details and jwt token in local storage to keep user logged in between page refreshes
-				localStorage.setItem('currentUser', JSON.stringify(user));
-				this.currentUserSubject.next(user);
-				return user;
-			}));
+			.pipe(this.newUser());
 	}
 
 	reset(token: string, password: string, passwordConfirm: string) {
 		return this.userService.resetPassword(token, { password, passwordConfirm })
-			.pipe(map(user => {
-				// store user details and jwt token in local storage to keep user logged in between page refreshes
-				localStorage.setItem('currentUser', JSON.stringify(user));
-				this.currentUserSubject.next(user);
-				return user;
-			}));
+			.pipe(this.newUser());
 	}
 
-	setNewObj(obj) {
-		localStorage.setItem('currentUser', JSON.stringify(obj));
-		this.currentUserSubject.next(obj);
+	private newUser() {
+		return map(data => {
+			let final;
+			if (!(!data || !(data as any).data)) {
+				const newData: any = (data as any).data;
+				if (newData.user) {
+					final = newData.user;
+				} else if (newData.doc) {
+					final = newData.doc;
+				}
+
+				if (!!final) {
+					final.token = (data as any).token;
+					final.success = (data as any).success;
+					Object.keys(final).forEach(key => {
+						if (key.startsWith('password')) {
+							delete final[key];
+						}
+					});
+					final.photo = final.photo === 'default' ? `${environment.apiUrl}/img/users/default.jpg` : final.photo;
+				}
+			}
+			// store user details and jwt token in local storage to keep user logged in between page refreshes
+			localStorage.setItem('currentUser', JSON.stringify(final));
+			this.currentUserSubject.next(final);
+			return final;
+		});
 	}
 
 	refresh() {
 		if (!(this.currentUserValue as any) || !(this.currentUserValue as any).data || !(this.currentUserValue as any).data.user) { return; }
 		return this.http.get<any>(`${environment.apiUrl}/api/v${environment.apiVersion}/users/${(this.currentUserValue as any).data.user._id}`)
-			.pipe(map(user => {
-				const newUser = user.data.doc;
-				const oldObjUser = JSON.parse(localStorage.getItem('currentUser'));
-				// store user details and jwt token in local storage to keep user logged in between page refreshes
-				oldObjUser.data.user = newUser;
-				localStorage.setItem('currentUser', JSON.stringify(oldObjUser));
-				this.currentUserSubject.next(oldObjUser);
-				return oldObjUser;
-			}));
+			.pipe(this.newUser());
 	}
 
 	signup(name: string, email: string, password: string, passwordConfirm: string) {
@@ -86,5 +97,6 @@ export class AuthenticationService {
 		// remove user from local storage to log user out
 		localStorage.removeItem('currentUser');
 		this.currentUserSubject.next(null);
+		this.router.navigate(['/login']);
 	}
 }

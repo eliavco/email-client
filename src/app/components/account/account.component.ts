@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { User } from './../../models/user';
 
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { UserService } from './../../services/user/user.service';
@@ -11,6 +12,7 @@ import { UserService } from './../../services/user/user.service';
 	styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
+	user: User;
 
 	constructor(
 		private titleService: Title,
@@ -20,20 +22,19 @@ export class AccountComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.titleService.setTitle(`${(window as any).bkBaseTitle} - Account`);
-	}
-
-	getUser() {
-		const user = this.authenticationService.refresh();
-		if (user) { user.subscribe(() => { location.reload(); }); }
+		this.refreshUser();
 	}
 
 	deleteAccount() {
 		this.userService.deleteSelf().subscribe(() => {
-			this.router.navigate(['/login']);
 			this.authenticationService.logout();
 		});
 	}
 
-	get user() { return (this.authenticationService.currentUserValue as any).data.user; }
+	refreshUser() {
+		this.authenticationService.currentUser.subscribe(data => {
+			this.user = (data as any);
+		});
+	}
 
 }

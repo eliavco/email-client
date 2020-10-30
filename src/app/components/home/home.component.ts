@@ -9,6 +9,7 @@ import { AuthenticationService } from './../../services/authentication/authentic
 import { AlertsService } from './../../services/alerts/alerts.service';
 
 import { faInbox, faBoxOpen, faTrash, faTrashRestore, faArchive, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { User } from './../../models/user';
 
 @Component({
 	selector: 'bk-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit, OnChanges {
 
 	emails: Email[];
 	displayEmails: Email[];
-	tabs = [
+	tabs: { title: string; action: any; icon: any; active?: boolean; unread?: number }[] = [
 		{ title: 'Inbox', action: this.filterInbox.bind(this), icon: faInbox },
 		{ title: 'Archive', action: this.filterArchive.bind(this), icon: faBoxOpen },
 		{ title: 'Trash', action: this.filterTrash.bind(this), icon: faTrash },
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit, OnChanges {
 	icons = { faTrash, faArchive, faTrashRestore, faBoxOpen, faPlusCircle };
 	tabActive = 'success';
 	page = 1;
+	user: User;
 
 	sortEmails() {
 		this.emails.sort((a, b) => -(b.createdAt.getTime() - a.createdAt.getTime()));
@@ -89,6 +91,13 @@ export class HomeComponent implements OnInit, OnChanges {
 		private socket: Socket) { }
 
 	ngOnInit() {
+		this.authenticationService.currentUser.subscribe(user => {
+			this.user = user;
+			this.initialize();
+		});
+	}
+
+	initialize() {
 		this.route.queryParams
 			.subscribe(params => {
 				if (params.page > 0) {
@@ -96,7 +105,7 @@ export class HomeComponent implements OnInit, OnChanges {
 				}
 				this.titleService.setTitle(`${(window as any).bkBaseTitle} - Inbox`);
 				+window.localStorage.active ? this.tabs[+window.localStorage.active].action() : this.filterInbox();
-				const toUser = (this.authenticationService.currentUserValue as any).data.user.subscriptions;
+				const toUser = this.user.subscriptions;
 				this.socket.on('refresh_emails', (change: [string]) => {
 					let refresh = false;
 					toUser.forEach(user => {
