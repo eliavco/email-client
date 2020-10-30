@@ -13,8 +13,6 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { CookieService } from 'ngx-cookie-service';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const { environment } = require('./../environments/environment');
-
 const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 // services
@@ -40,6 +38,8 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
 import { UpdateAliasComponent } from './components/update-alias/update-alias.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SafeHtmlPipe } from './pipes/safe-html/safe-html.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
 	declarations: [
@@ -68,7 +68,8 @@ import { SafeHtmlPipe } from './pipes/safe-html/safe-html.pipe';
 		FontAwesomeModule,
 		ReactiveFormsModule,
 		FormsModule,
-		SocketIoModule.forRoot(config)
+		SocketIoModule.forRoot(config),
+		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

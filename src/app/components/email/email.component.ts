@@ -6,6 +6,7 @@ import { faBackward, faTrash, faArchive, faCaretRight } from '@fortawesome/free-
 import { Email } from './../../interfaces/email';
 import { EmailsService } from './../../services/emails/emails.service';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
+import { User } from './../../models/user';
 
 @Component({
 	selector: 'bk-email',
@@ -19,6 +20,7 @@ export class EmailComponent implements OnInit {
 	icons = { faBackward, faTrash, faArchive, faCaretRight };
 	fromPage = 1;
 	ok: boolean;
+	user: User;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -29,7 +31,10 @@ export class EmailComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(params => {
 			this.id = params.get('emailId');
-			this.refreshEmail();
+			this.authenticationService.currentUser.subscribe(user => {
+				this.user = user;
+				this.refreshEmail();
+			});
 			this.route.queryParams
 				.subscribe(qparams => {
 					if (qparams.fromPage > 0) {
@@ -41,7 +46,7 @@ export class EmailComponent implements OnInit {
 
 	refreshEmail(): void {
 		this.emailsService.getEmail(this.id).subscribe(email => {
-			const subscriptions = (this.authenticationService.currentUserValue as any).data.user.subscriptions;
+			const subscriptions = this.user.subscriptions;
 			const parsedEmail = this.parseEmail((email as any).data.doc);
 			subscriptions.forEach(user => {
 				if (parsedEmail.toUser.indexOf(user) > -1) {

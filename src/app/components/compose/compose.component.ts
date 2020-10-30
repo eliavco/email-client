@@ -10,6 +10,7 @@ import { faPaperPlane, faWindowClose, faCalendarAlt, faSmileWink } from '@fortaw
 import Quill from 'quill';
 
 import * as EmojiButton from '@joeattardi/emoji-button';
+import { User } from './../../models/user';
 // import 'quill-emoji';
 
 const shortid = require('shortid');
@@ -105,7 +106,6 @@ export class ComposeComponent implements OnInit {
 		},
 	];
 	editor;
-	associatedEmails;
 	files: [{
 		file: File,
 		field: string,
@@ -118,6 +118,11 @@ export class ComposeComponent implements OnInit {
 	calendar = false;
 	calendarExists = false;
 	ref = '';
+	user: User;
+	get associatedEmails(): string[] {
+		if (!this.user || !this.user.subscriptions) { return []; }
+		return this.user.subscriptions.map(subscription => `${subscription}@${environment.baseMail}`);
+	}
 
 	constructor(
 		private titleService: Title,
@@ -135,7 +140,9 @@ export class ComposeComponent implements OnInit {
 		this.titleService.setTitle(`${(window as any).bkBaseTitle} - Compose`);
 		this.editorInit();
 		this.emojiInit();
-		this.associatedEmails = (this.authenticationService.currentUserValue as any).data.user.subscriptions.map(subscription => `${subscription}@${environment.baseMail}`);
+		this.authenticationService.currentUser.subscribe(user => {
+			this.user = user;
+		});
 		this.route.queryParams
 			.subscribe(qparams => {
 				if (qparams.to) {
