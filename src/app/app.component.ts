@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { SwUpdate } from '@angular/service-worker';
+import { HttpClient } from '@angular/common/http';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { User } from './models/user';
-import { SwUpdate } from '@angular/service-worker';
+import { environment } from 'src/environments/environment';
 
 // tslint:disable-next-line: ban-types
 declare let gtag: Function;
@@ -21,8 +23,10 @@ export class AppComponent implements OnInit{
 	constructor(
 		public router: Router,
 		private authenticationService: AuthenticationService,
+		private http: HttpClient,
 		private updates: SwUpdate
 	) {
+		this.http.get(environment.apiUrl).subscribe();
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				mgaids.forEach(mgaid => {
